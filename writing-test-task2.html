@@ -280,6 +280,7 @@ function exportAnswer(inputId, fileName) {
     URL.revokeObjectURL(link.href);
 }
 
+<script>
 window.onload = () => {
     loadSaved('task2Input');
     countWords('task2Input','task2Count',250);
@@ -288,8 +289,16 @@ window.onload = () => {
 document.getElementById('task2Input').addEventListener('input', () => {
     countWords('task2Input','task2Count',250);
     autoSave('task2Input','save2');
+    // ✅ Saves text so review page can read it
+    localStorage.setItem('writing-task2', document.getElementById('task2Input').value);
 });
 </script>
+
+    <!-- Link to Complete Answers Review -->
+<div style="text-align:center; margin-top:30px; padding:15px; background:#e8f4fc; border-radius:8px;">
+    <p style="font-size:18px; color:#2980b9; margin-bottom:10px;">✅ You have completed Writing Task 2 — All sections finished!</p>
+    <a href="answers-review.html" style="display:inline-block; padding:12px 25px; background:#27ae60; color:white; font-size:17px; font-weight:bold; border-radius:6px; text-decoration:none;">📋 View All Answers — Teacher Review</a>
+</div>
 
 </body>
 </html>
