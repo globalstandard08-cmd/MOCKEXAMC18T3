@@ -16,11 +16,6 @@
             background-color: #f4f6f9;
             padding: 20px;
             line-height: 1.7;
-            position: relative;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
         }
 
         .container {
@@ -29,8 +24,6 @@
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            overflow: visible;
-            position: relative;
         }
 
         .logo-section {
@@ -77,7 +70,6 @@
 
         .content {
             padding: 0 30px 30px;
-            position: relative;
         }
 
         h2 {
@@ -95,14 +87,6 @@
             font-weight: 500;
         }
 
-        .questions-block {
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            padding: 25px;
-            margin-bottom: 30px;
-            background-color: #fdfdfd;
-        }
-
         .q-group-title {
             font-weight: bold;
             font-size: 17px;
@@ -110,10 +94,12 @@
             color: #1f3a5f;
         }
 
-        .question-line {
-            margin-bottom: 16px;
-            padding: 6px 0;
-            font-size: 16px;
+        .question-block {
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 25px;
+            background-color: #fdfdfd;
         }
 
         .q-number {
@@ -123,118 +109,77 @@
             display: inline-block;
         }
 
-        .letter-option {
-            display: block;
-            margin: 6px 0 6px 35px;
+        /* ✅ CHECKBOX / TICK BOX STYLE OPTIONS */
+        .option-row {
+            display: flex;
+            align-items: flex-start;
+            margin: 8px 0;
+            padding: 6px 10px;
+            border-radius: 4px;
             cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 3px;
             transition: background 0.15s;
         }
 
-        .letter-option:hover {
+        .option-row:hover {
             background-color: #eef2f7;
         }
 
-        .letter-option.selected {
+        .option-row.selected {
             background-color: #d4e3fc;
             font-weight: 600;
             color: #1f3a5f;
         }
 
-        .answer-box {
-            display: inline-block;
-            width: 40px;
-            height: 30px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            text-align: center;
-            line-height: 28px;
-            font-weight: bold;
-            color: #1f3a5f;
-            background: white;
-            margin-left: 8px;
-        }
-
-        .answer-box.filled {
-            background-color: #e6f0ff;
-            border-color: #1f3a5f;
-        }
-
-        /* Highlight style */
-        .user-highlight {
-            background-color: #ffd700;
-            padding: 2px 4px;
-            border-radius: 2px;
-            cursor: pointer;
-            display: inline;
-            color: #000;
-        }
-
-        /* Right-click Context Menu */
-        .context-menu {
-            position: absolute;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            z-index: 9999;
-            display: none;
-            min-width: 160px;
-        }
-        .context-menu div {
-            padding: 10px 14px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .context-menu div:hover {
-            background: #f0f0f0;
-        }
-
-        /* Sticky Notes */
-        .sticky-note {
-            position: absolute;
-            width: 170px;
-            min-height: 70px;
-            background: #fff9c4;
-            border: 1px solid #fbc02d;
-            border-radius: 4px;
-            padding: 8px;
-            box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
-            z-index: 9998;
-            font-size: 13px;
-        }
-        .note-header {
-            display: flex;
-            justify-content: space-between;
+        .tick-box {
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #9ca3af;
+            border-radius: 4px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            background: white;
             font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 12px;
-            color: #f57f17;
-        }
-        .note-close {
-            cursor: pointer;
-            font-weight: bold;
-            color: #f57f17;
-        }
-        .note-textarea {
-            width: 100%;
-            height: 50px;
-            border: none;
-            background: transparent;
-            resize: none;
-            outline: none;
-            font-family: inherit;
-            font-size: 13px;
+            font-size: 15px;
+            color: transparent;
+            transition: all 0.15s;
         }
 
-        /* Question Status Bar */
+        .option-row.selected .tick-box {
+            border-color: #1f3a5f;
+            background-color: #1f3a5f;
+            color: white;
+            content: "✓";
+        }
+
+        .answer-display {
+            margin-top: 12px;
+            padding: 8px 12px;
+            background: #f0f4f8;
+            border-radius: 4px;
+            font-weight: 500;
+            color: #1f3a5f;
+            min-height: 36px;
+        }
+
+        .answer-display span {
+            display: inline-block;
+            background: #1f3a5f;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            margin: 0 4px;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        /* Status Bar */
         .question-status {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: flex-start;
             gap: 6px;
             margin: 30px 0;
             padding: 12px 15px;
@@ -248,14 +193,7 @@
             font-size: 11px;
             font-weight: bold;
             color: #444;
-            margin-right: 4px;
             margin-left: 8px;
-        }
-
-        .part-separator {
-            width: 12px;
-            height: 24px;
-            flex-shrink: 0;
         }
 
         .q-indicator {
@@ -264,7 +202,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: normal;
             border-radius: 2px;
             border: 1px solid #d1d5db;
             background: #e5e7eb;
@@ -273,14 +210,7 @@
 
         .q-indicator.current {
             background: #d9dce1;
-            color: #000;
             border-color: #b0b4b9;
-        }
-
-        .q-indicator.other {
-            background: #efefef;
-            color: #999;
-            border-color: #e5e7eb;
         }
 
         .q-indicator.answered {
@@ -304,7 +234,6 @@
             background-color: #b91c1c;
         }
 
-        /* Navigation */
         .nav-container {
             display: flex;
             justify-content: space-between;
@@ -312,11 +241,6 @@
             margin-top: 25px;
             padding-top: 15px;
             border-top: 1px solid #eee;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
         }
 
         .nav-btn {
@@ -332,7 +256,6 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            transition: background 0.2s;
         }
 
         .nav-btn:hover {
@@ -349,7 +272,6 @@
             font-weight: 500;
             cursor: pointer;
             text-decoration: none;
-            transition: background 0.2s;
         }
 
         .back-main-btn:hover {
@@ -358,13 +280,6 @@
     </style>
 </head>
 <body>
-    <!-- Right-click Context Menu -->
-    <div class="context-menu" id="contextMenu">
-        <div id="menuHighlight">✅ Highlight</div>
-        <div id="menuRemove">❌ Remove Highlight</div>
-        <div id="menuNote">📝 Add Note</div>
-    </div>
-
     <div class="container">
         <div class="logo-section">
             <img src="ielts-logo.png" alt="IELTS Logo">
@@ -375,7 +290,6 @@
             <span style="font-size:15px; opacity:0.9;">Exam Mode</span>
         </div>
 
-        <!-- Audio Player -->
         <div class="audio-player">
             <h3>Play Recording - Part 2</h3>
             <audio controls preload="auto">
@@ -385,174 +299,205 @@
             
         </div>
 
-        <div class="content" id="highlightArea">
+        <div class="content">
             <h2>Section 2 – Questions 11–20</h2>
 
-            <!-- Questions 11-12 -->
+            <!-- ========== Q11-12: Choose TWO ========== -->
             <div class="instruction">
                 <strong>Questions 11 and 12</strong><br>
                 Choose <strong>TWO</strong> letters, A–E.
             </div>
 
-            <div class="questions-block">
+            <div class="question-block">
                 <div class="q-group-title">Which TWO warnings does Dan give about picking mushrooms?</div>
-                <div class="question-line">
-                    <span class="q-number">11, 12.</span>
-                    <span>Write TWO letters: <strong>_______ and _______</strong></span>
-                    <div style="margin-top:8px;">
-                        <span>A. Don't pick more than one variety of mushroom at a time.</span><br>
-                        <span>B. Don't pick mushrooms near busy roads.</span><br>
-                        <span>C. Don't eat mushrooms given to you.</span><br>
-                        <span>D. Don't eat mushrooms while picking them.</span><br>
-                        <span>E. Don't pick old mushrooms.</span>
-                    </div>
-                    <div style="margin-top:10px;">
-                        Answer: <span class="answer-box" id="q11" data-q="11"></span> and <span class="answer-box" id="q12" data-q="12"></span>
-                    </div>
+
+                <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="A">
+                    <span class="tick-box"></span>
+                    <span><strong>A</strong> Don't pick more than one variety of mushroom at a time.</span>
+                </div>
+                <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="B">
+                    <span class="tick-box"></span>
+                    <span><strong>B</strong> Don't pick mushrooms near busy roads.</span>
+                </div>
+                <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="C">
+                    <span class="tick-box"></span>
+                    <span><strong>C</strong> Don't eat mushrooms given to you.</span>
+                </div>
+                <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="D">
+                    <span class="tick-box"></span>
+                    <span><strong>D</strong> Don't eat mushrooms while picking them.</span>
+                </div>
+                <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="E">
+                    <span class="tick-box"></span>
+                    <span><strong>E</strong> Don't pick old mushrooms.</span>
+                </div>
+
+                <div class="answer-display">
+                    Answers: <span id="ans11"></span> <span id="ans12"></span>
                 </div>
             </div>
 
-            <!-- Questions 13-14 -->
+            <!-- ========== Q13-14: Choose TWO ========== -->
             <div class="instruction">
                 <strong>Questions 13 and 14</strong><br>
                 Choose <strong>TWO</strong> letters, A–E.
             </div>
 
-            <div class="questions-block">
+            <div class="question-block">
                 <div class="q-group-title">Which TWO ideas about wild mushrooms does Dan say are correct?</div>
-                <div class="question-line">
-                    <span class="q-number">13, 14.</span>
-                    <span>Write TWO letters: <strong>_______ and _______</strong></span>
-                    <div style="margin-top:8px;">
-                        <span>A. Mushrooms should always be peeled before eating.</span><br>
-                        <span>B. Mushrooms eaten by animals may be unsafe.</span><br>
-                        <span>C. Cooking destroys toxins in mushrooms.</span><br>
-                        <span>D. Brightly coloured mushrooms can be edible.</span><br>
-                        <span>E. All poisonous mushrooms have a bad smell.</span>
-                    </div>
-                    <div style="margin-top:10px;">
-                        Answer: <span class="answer-box" id="q13" data-q="13"></span> and <span class="answer-box" id="q14" data-q="14"></span>
-                    </div>
+
+                <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="A">
+                    <span class="tick-box"></span>
+                    <span><strong>A</strong> Mushrooms should always be peeled before eating.</span>
+                </div>
+                <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="B">
+                    <span class="tick-box"></span>
+                    <span><strong>B</strong> Mushrooms eaten by animals may be unsafe.</span>
+                </div>
+                <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="C">
+                    <span class="tick-box"></span>
+                    <span><strong>C</strong> Cooking destroys toxins in mushrooms.</span>
+                </div>
+                <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="D">
+                    <span class="tick-box"></span>
+                    <span><strong>D</strong> Brightly coloured mushrooms can be edible.</span>
+                </div>
+                <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="E">
+                    <span class="tick-box"></span>
+                    <span><strong>E</strong> All poisonous mushrooms have a bad smell.</span>
+                </div>
+
+                <div class="answer-display">
+                    Answers: <span id="ans13"></span> <span id="ans14"></span>
                 </div>
             </div>
 
-            <!-- Questions 15-20 -->
+            <!-- ========== Q15-20: Single Choice ========== -->
             <div class="instruction">
                 <strong>Questions 15–20</strong><br>
                 Choose the correct letter, <strong>A, B or C</strong>.
             </div>
 
-            <div class="questions-block">
-                <div class="question-line">
+            <div class="question-block">
+                <div style="margin-bottom:14px;">
                     <span class="q-number">15.</span>
                     <span>What advice does Dan give about picking mushrooms in parks?</span>
-                    <div class="letter-option" data-q="15" data-val="A">A Choose wooded areas.</div>
-                    <div class="letter-option" data-q="15" data-val="B">B Don't disturb wildlife.</div>
-                    <div class="letter-option" data-q="15" data-val="C">C Get there early.</div>
-                    <div style="margin-top:4px;">Answer: <span class="answer-box" id="q15" data-q="15"></span></div>
+                    <div class="option-row single" data-q="15" data-val="A">
+                        <span class="tick-box"></span>
+                        <span><strong>A</strong> Choose wooded areas.</span>
+                    </div>
+                    <div class="option-row single" data-q="15" data-val="B">
+                        <span class="tick-box"></span>
+                        <span><strong>B</strong> Don't disturb wildlife.</span>
+                    </div>
+                    <div class="option-row single" data-q="15" data-val="C">
+                        <span class="tick-box"></span>
+                        <span><strong>C</strong> Get there early.</span>
+                    </div>
+                    <div class="answer-display">Answer: <span id="ans15"></span></div>
                 </div>
 
-                <div class="question-line">
+                <div style="margin-bottom:14px;">
                     <span class="q-number">16.</span>
                     <span>Dan says it is a good idea for beginners to</span>
-                    <div class="letter-option" data-q="16" data-val="A">A use a mushroom app.</div>
-                    <div class="letter-option" data-q="16" data-val="B">B join a group.</div>
-                    <div class="letter-option" data-q="16" data-val="C">C take a reference book.</div>
-                    <div style="margin-top:4px;">Answer: <span class="answer-box" id="q16" data-q="16"></span></div>
+                    <div class="option-row single" data-q="16" data-val="A">
+                        <span class="tick-box"></span>
+                        <span><strong>A</strong> use a mushroom app.</span>
+                    </div>
+                    <div class="option-row single" data-q="16" data-val="B">
+                        <span class="tick-box"></span>
+                        <span><strong>B</strong> join a group.</span>
+                    </div>
+                    <div class="option-row single" data-q="16" data-val="C">
+                        <span class="tick-box"></span>
+                        <span><strong>C</strong> take a reference book.</span>
+                    </div>
+                    <div class="answer-display">Answer: <span id="ans16"></span></div>
                 </div>
 
-                <div class="question-line">
+                <div style="margin-bottom:14px;">
                     <span class="q-number">17.</span>
                     <span>What does Dan say is important for conservation?</span>
-                    <div class="letter-option" data-q="17" data-val="A">A selecting only fully grown mushrooms</div>
-                    <div class="letter-option" data-q="17" data-val="B">B picking a limited amount of mushrooms</div>
-                    <div class="letter-option" data-q="17" data-val="C">C avoiding areas where rare mushroom species grow</div>
-                    <div style="margin-top:4px;">Answer: <span class="answer-box" id="q17" data-q="17"></span></div>
+                    <div class="option-row single" data-q="17" data-val="A">
+                        <span class="tick-box"></span>
+                        <span><strong>A</strong> selecting only fully grown mushrooms</span>
+                    </div>
+                    <div class="option-row single" data-q="17" data-val="B">
+                        <span class="tick-box"></span>
+                        <span><strong>B</strong> picking a limited amount of mushrooms</span>
+                    </div>
+                    <div class="option-row single" data-q="17" data-val="C">
+                        <span class="tick-box"></span>
+                        <span><strong>C</strong> avoiding areas where rare mushroom species grow</span>
+                    </div>
+                    <div class="answer-display">Answer: <span id="ans17"></span></div>
                 </div>
 
-                <div class="question-line">
+                <div style="margin-bottom:14px;">
                     <span class="q-number">18.</span>
                     <span>According to Dan, some varieties of wild mushrooms are in decline because there is</span>
-                    <div class="letter-option" data-q="18" data-val="A">A a huge demand for them from restaurants.</div>
-                    <div class="letter-option" data-q="18" data-val="B">B a lack of rain in this part of the country.</div>
-                    <div class="letter-option" data-q="18" data-val="C">C a rise in building developments locally.</div>
-                    <div style="margin-top:4px;">Answer: <span class="answer-box" id="q18" data-q="18"></span></div>
+                    <div class="option-row single" data-q="18" data-val="A">
+                        <span class="tick-box"></span>
+                        <span><strong>A</strong> a huge demand for them from restaurants.</span>
+                    </div>
+                    <div class="option-row single" data-q="18" data-val="B">
+                        <span class="tick-box"></span>
+                        <span><strong>B</strong> a lack of rain in this part of the country.</span>
+                    </div>
+                    <div class="option-row single" data-q="18" data-val="C">
+                        <span class="tick-box"></span>
+                        <span><strong>C</strong> a rise in building developments locally.</span>
+                    </div>
+                    <div class="answer-display">Answer: <span id="ans18"></span></div>
                 </div>
 
-                <div class="question-line">
+                <div style="margin-bottom:14px;">
                     <span class="q-number">19.</span>
                     <span>Dan says that when storing mushrooms, people should</span>
-                    <div class="letter-option" data-q="19" data-val="A">A keep them in the fridge for no more than two days.</div>
-                    <div class="letter-option" data-q="19" data-val="B">B keep them in a brown bag in a dark room.</div>
-                    <div class="letter-option" data-q="19" data-val="C">C leave them for a period after washing them.</div>
-                    <div style="margin-top:4px;">Answer: <span class="answer-box" id="q19" data-q="19"></span></div>
+                    <div class="option-row single" data-q="19" data-val="A">
+                        <span class="tick-box"></span>
+                        <span><strong>A</strong> keep them in the fridge for no more than two days.</span>
+                    </div>
+                    <div class="option-row single" data-q="19" data-val="B">
+                        <span class="tick-box"></span>
+                        <span><strong>B</strong> keep them in a brown bag in a dark room.</span>
+                    </div>
+                    <div class="option-row single" data-q="19" data-val="C">
+                        <span class="tick-box"></span>
+                        <span><strong>C</strong> leave them for a period after washing them.</span>
+                    </div>
+                    <div class="answer-display">Answer: <span id="ans19"></span></div>
                 </div>
 
-                <div class="question-line">
+                <div>
                     <span class="q-number">20.</span>
                     <span>What does Dan say about trying new varieties of mushrooms?</span>
-                    <div class="letter-option" data-q="20" data-val="A">A Experiment with different recipes.</div>
-                    <div class="letter-option" data-q="20" data-val="B">B Expect some to have a strong taste.</div>
-                    <div class="letter-option" data-q="20" data-val="C">C Cook them for a long time.</div>
-                    <div style="margin-top:4px;">Answer: <span class="answer-box" id="q20" data-q="20"></span></div>
+                    <div class="option-row single" data-q="20" data-val="A">
+                        <span class="tick-box"></span>
+                        <span><strong>A</strong> Experiment with different recipes.</span>
+                    </div>
+                    <div class="option-row single" data-q="20" data-val="B">
+                        <span class="tick-box"></span>
+                        <span><strong>B</strong> Expect some to have a strong taste.</span>
+                    </div>
+                    <div class="option-row single" data-q="20" data-val="C">
+                        <span class="tick-box"></span>
+                        <span><strong>C</strong> Cook them for a long time.</span>
+                    </div>
+                    <div class="answer-display">Answer: <span id="ans20"></span></div>
                 </div>
             </div>
 
-            <!-- Question Status Bar -->
+            <!-- Status Bar -->
             <div class="question-status">
-                <span class="part-label">Part 1</span>
-                <div class="q-indicator other" data-q="1">1</div>
-                <div class="q-indicator other" data-q="2">2</div>
-                <div class="q-indicator other" data-q="3">3</div>
-                <div class="q-indicator other" data-q="4">4</div>
-                <div class="q-indicator other" data-q="5">5</div>
-                <div class="q-indicator other" data-q="6">6</div>
-                <div class="q-indicator other" data-q="7">7</div>
-                <div class="q-indicator other" data-q="8">8</div>
-                <div class="q-indicator other" data-q="9">9</div>
-                <div class="q-indicator other" data-q="10">10</div>
-
-                <div class="part-separator"></div>
-
-                <span class="part-label">Part 2</span>
-                <div class="q-indicator current" data-q="11">11</div>
-                <div class="q-indicator current" data-q="12">12</div>
-                <div class="q-indicator current" data-q="13">13</div>
-                <div class="q-indicator current" data-q="14">14</div>
-                <div class="q-indicator current" data-q="15">15</div>
-                <div class="q-indicator current" data-q="16">16</div>
-                <div class="q-indicator current" data-q="17">17</div>
-                <div class="q-indicator current" data-q="18">18</div>
-                <div class="q-indicator current" data-q="19">19</div>
-                <div class="q-indicator current" data-q="20">20</div>
-
-                <div class="part-separator"></div>
-
-                <span class="part-label">Part 3</span>
-                <div class="q-indicator other" data-q="21">21</div>
-                <div class="q-indicator other" data-q="22">22</div>
-                <div class="q-indicator other" data-q="23">23</div>
-                <div class="q-indicator other" data-q="24">24</div>
-                <div class="q-indicator other" data-q="25">25</div>
-                <div class="q-indicator other" data-q="26">26</div>
-                <div class="q-indicator other" data-q="27">27</div>
-                <div class="q-indicator other" data-q="28">28</div>
-                <div class="q-indicator other" data-q="29">29</div>
-                <div class="q-indicator other" data-q="30">30</div>
-
-                <div class="part-separator"></div>
-
-                <span class="part-label">Part 4</span>
-                <div class="q-indicator other" data-q="31">31</div>
-                <div class="q-indicator other" data-q="32">32</div>
-                <div class="q-indicator other" data-q="33">33</div>
-                <div class="q-indicator other" data-q="34">34</div>
-                <div class="q-indicator other" data-q="35">35</div>
-                <div class="q-indicator other" data-q="36">36</div>
-                <div class="q-indicator other" data-q="37">37</div>
-                <div class="q-indicator other" data-q="38">38</div>
-                <div class="q-indicator other" data-q="39">39</div>
-                <div class="q-indicator other" data-q="40">40</div>
+                <span class="part-label">P1</span>
+                <div class="q-indicator" data-q="1">1</div><div class="q-indicator" data-q="2">2</div><div class="q-indicator" data-q="3">3</div><div class="q-indicator" data-q="4">4</div><div class="q-indicator" data-q="5">5</div><div class="q-indicator" data-q="6">6</div><div class="q-indicator" data-q="7">7</div><div class="q-indicator" data-q="8">8</div><div class="q-indicator" data-q="9">9</div><div class="q-indicator" data-q="10">10</div>
+                <span class="part-label">P2</span>
+                <div class="q-indicator current" data-q="11">11</div><div class="q-indicator current" data-q="12">12</div><div class="q-indicator current" data-q="13">13</div><div class="q-indicator current" data-q="14">14</div><div class="q-indicator current" data-q="15">15</div><div class="q-indicator current" data-q="16">16</div><div class="q-indicator current" data-q="17">17</div><div class="q-indicator current" data-q="18">18</div><div class="q-indicator current" data-q="19">19</div><div class="q-indicator current" data-q="20">20</div>
+                <span class="part-label">P3</span>
+                <div class="q-indicator" data-q="21">21</div><div class="q-indicator" data-q="22">22</div><div class="q-indicator" data-q="23">23</div><div class="q-indicator" data-q="24">24</div><div class="q-indicator" data-q="25">25</div><div class="q-indicator" data-q="26">26</div><div class="q-indicator" data-q="27">27</div><div class="q-indicator" data-q="28">28</div><div class="q-indicator" data-q="29">29</div><div class="q-indicator" data-q="30">30</div>
+                <span class="part-label">P4</span>
+                <div class="q-indicator" data-q="31">31</div><div class="q-indicator" data-q="32">32</div><div class="q-indicator" data-q="33">33</div><div class="q-indicator" data-q="34">34</div><div class="q-indicator" data-q="35">35</div><div class="q-indicator" data-q="36">36</div><div class="q-indicator" data-q="37">37</div><div class="q-indicator" data-q="38">38</div><div class="q-indicator" data-q="39">39</div><div class="q-indicator" data-q="40">40</div>
             </div>
 
             <button class="clear-btn" onclick="clearAll()">Clear All Answers</button>
@@ -567,134 +512,69 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Load saved answers for Q11-20
+            // --- Load saved answers ---
             for (let i = 11; i <= 20; i++) {
-                const box = document.getElementById('q' + i);
                 const saved = localStorage.getItem('L_P2_q' + i);
                 if (saved) {
-                    box.textContent = saved;
-                    box.classList.add('filled');
+                    document.getElementById('ans' + i).textContent = saved;
                     markAnswered(i);
                 }
             }
 
-            // Handle letter clicks for Q15-20
-            document.querySelectorAll('.letter-option').forEach(opt => {
-                opt.addEventListener('click', function() {
-                    const qNum = this.dataset.q;
+            // --- Single choice click (Q15-20) ---
+            document.querySelectorAll('.option-row.single').forEach(row => {
+                row.addEventListener('click', function() {
+                    const q = this.dataset.q;
                     const val = this.dataset.val;
-                    const box = document.getElementById('q' + qNum);
-                    box.textContent = val;
-                    box.classList.add('filled');
-                    localStorage.setItem('L_P2_q' + qNum, val);
-                    markAnswered(qNum);
+                    const container = this.parentElement;
+                    // Remove selected from siblings
+                    container.querySelectorAll('.option-row.single').forEach(r => {
+                        if (r.dataset.q === q) r.classList.remove('selected');
+                    });
+                    // Mark this one
+                    this.classList.add('selected');
+                    // Save & display
+                    localStorage.setItem('L_P2_q' + q, val);
+                    document.getElementById('ans' + q).textContent = val;
+                    markAnswered(q);
                 });
             });
 
-            // Allow typing letters for Q11-14
-            ['q11','q12','q13','q14'].forEach(id => {
-                const box = document.getElementById(id);
-                const qNum = box.dataset.q;
-                box.style.cursor = 'text';
-                box.contentEditable = 'true';
-                box.addEventListener('blur', function() {
-                    let val = this.textContent.trim().toUpperCase().replace(/[^A-E]/g, '');
-                    this.textContent = val;
-                    if (val) {
-                        this.classList.add('filled');
-                        localStorage.setItem('L_P2_q' + qNum, val);
-                        markAnswered(qNum);
-                    } else {
-                        this.classList.remove('filled');
-                        localStorage.removeItem('L_P2_q' + qNum);
-                        unmarkAnswered(qNum);
-                    }
+            // --- TWO choice click (Q11-12 and Q13-14) ---
+            const multiGroups = [
+                { qs: ['11','12'], prefix: '1112' },
+                { qs: ['13','14'], prefix: '1314' }
+            ];
+
+            multiGroups.forEach(group => {
+                const selected = new Set();
+                document.querySelectorAll(`.option-row.multi-2[data-q1="${group.qs[0]}"]`).forEach(row => {
+                    row.addEventListener('click', function() {
+                        const val = this.dataset.val;
+                        // Toggle selection
+                        if (this.classList.contains('selected')) {
+                            this.classList.remove('selected');
+                            selected.delete(val);
+                        } else {
+                            if (selected.size >= 2) return; // Max 2 selections
+                            this.classList.add('selected');
+                            selected.add(val);
+                        }
+                        // Convert to sorted array
+                        let arr = Array.from(selected).sort();
+                        // Save answers
+                        localStorage.setItem('L_P2_q' + group.qs[0], arr[0] || '');
+                        localStorage.setItem('L_P2_q' + group.qs[1], arr[1] || '');
+                        // Display answers
+                        document.getElementById('ans' + group.qs[0]).textContent = arr[0] || '';
+                        document.getElementById('ans' + group.qs[1]).textContent = arr[1] || '';
+                        // Update status
+                        if (arr[0]) markAnswered(group.qs[0]); else unmarkAnswered(group.qs[0]);
+                        if (arr[1]) markAnswered(group.qs[1]); else unmarkAnswered(group.qs[1]);
+                    });
                 });
             });
-
-            // --- Right-click Highlight & Note System ---
-            const highlightArea = document.getElementById('highlightArea');
-            const contextMenu = document.getElementById('contextMenu');
-            let currentRange = null;
-            let lastNoteId = 0;
-
-            highlightArea.addEventListener('contextmenu', function(e) {
-                const sel = window.getSelection();
-                if (!sel || sel.isCollapsed || !sel.toString().trim()) {
-                    contextMenu.style.display = 'none';
-                    return;
-                }
-                e.preventDefault();
-                currentRange = sel.getRangeAt(0);
-                const rect = currentRange.getBoundingClientRect();
-                contextMenu.style.left = (rect.left + window.scrollX) + 'px';
-                contextMenu.style.top = (rect.bottom + window.scrollY + 5) + 'px';
-                contextMenu.style.display = 'block';
-            });
-
-            document.addEventListener('click', () => contextMenu.style.display = 'none');
-
-            document.getElementById('menuHighlight').addEventListener('click', function() {
-                if (!currentRange) return;
-                const span = document.createElement('span');
-                span.className = 'user-highlight';
-                span.textContent = currentRange.toString();
-                currentRange.deleteContents();
-                currentRange.insertNode(span);
-                window.getSelection().removeAllRanges();
-                currentRange = null;
-            });
-
-            document.getElementById('menuRemove').addEventListener('click', function() {
-                if (!currentRange) return;
-                try {
-                    let span = currentRange.commonAncestorContainer;
-                    if (span.nodeType === Node.TEXT_NODE) span = span.parentElement;
-                    if (span?.classList.contains('user-highlight')) {
-                        span.replaceWith(document.createTextNode(span.textContent));
-                        highlightArea.normalize();
-                    }
-                } catch (e) {}
-                window.getSelection().removeAllRanges();
-                currentRange = null;
-            });
-
-            document.getElementById('menuNote').addEventListener('click', function() {
-                if (!currentRange) return;
-                const rect = currentRange.getBoundingClientRect();
-                const noteId = 'note_' + (++lastNoteId);
-                const note = document.createElement('div');
-                note.className = 'sticky-note';
-                note.id = noteId;
-                note.innerHTML = `
-                    <div class="note-header">Note <span class="note-close" onclick="closeNote('${noteId}')">×</span></div>
-                    <textarea class="note-textarea" placeholder="Type your note..."></textarea>
-                `;
-                note.style.left = (rect.right + window.scrollX + 10) + 'px';
-                note.style.top = (rect.top + window.scrollY) + 'px';
-                document.body.appendChild(note);
-                window.getSelection().removeAllRanges();
-                currentRange = null;
-            });
-
-            window.closeNote = function(id) {
-                document.getElementById(id)?.remove();
-            };
         });
-
-        function clearAll() {
-            if (!confirm("Clear ALL your answers, highlights, and notes? This cannot be undone.")) return;
-            for (let i = 11; i <= 20; i++) {
-                localStorage.removeItem('L_P2_q' + i);
-                const box = document.getElementById('q' + i);
-                if (box) { box.textContent = ''; box.classList.remove('filled'); }
-                unmarkAnswered(i);
-            }
-            document.querySelectorAll('.user-highlight').forEach(span => {
-                span.replaceWith(document.createTextNode(span.textContent));
-            });
-            document.querySelectorAll('.sticky-note').forEach(note => note.remove());
-        }
 
         function markAnswered(qNum) {
             const el = document.querySelector(`.q-indicator[data-q="${qNum}"]`);
@@ -703,6 +583,16 @@
         function unmarkAnswered(qNum) {
             const el = document.querySelector(`.q-indicator[data-q="${qNum}"]`);
             if (el) el.classList.remove('answered');
+        }
+
+        function clearAll() {
+            if (!confirm("Clear ALL answers for Part 2?")) return;
+            for (let i = 11; i <= 20; i++) {
+                localStorage.removeItem('L_P2_q' + i);
+                document.getElementById('ans' + i).textContent = '';
+                unmarkAnswered(i);
+            }
+            document.querySelectorAll('.option-row').forEach(r => r.classList.remove('selected'));
         }
     </script>
 </body>
