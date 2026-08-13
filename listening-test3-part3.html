@@ -168,7 +168,7 @@
             font-weight: bold;
         }
 
-        /* Matching Style Box (Questions 25-30) */
+        /* Matching Style Box */
         .match-box {
             border: 1px solid #999;
             background: #fefefe;
@@ -197,7 +197,6 @@
             padding: 8px 10px;
             margin: 4px 0;
             border-radius: 4px;
-            cursor: pointer;
             transition: background 0.15s;
         }
 
@@ -205,18 +204,24 @@
             background-color: #eef2f7;
         }
 
-        .match-answer-box {
+        /* DROPDOWN select — real exam style */
+        .match-select {
             margin-left: auto;
-            width: 36px;
-            height: 30px;
+            width: 80px;
+            height: 36px;
             border: 1px solid #999;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 4px;
+            font-size: 15px;
             font-weight: bold;
             color: #1f3a5f;
             background: #f9fafc;
+            padding-left: 8px;
+            cursor: pointer;
+        }
+
+        .match-select:focus {
+            outline: 2px solid #1f3a5f;
+            border-color: #1f3a5f;
         }
 
         /* HIGHLIGHT STYLE */
@@ -475,7 +480,7 @@
                 </div>
             </div>
 
-            <!-- ========== Q25-30: Matching ========== -->
+            <!-- ========== Q25-30: Matching with DROPDOWNS ========== -->
             <div class="instruction">
                 <strong>Questions 25–30</strong><br>
                 What comment do the students make about each of the following jobs?<br>
@@ -494,35 +499,89 @@
             </div>
 
             <div class="question-block">
-                <div class="match-row" data-q="25" data-letters="A,B,C,D,E,F,G">
+                <div class="match-row">
                     <span class="q-number">25.</span>
                     <span>Accountants</span>
-                    <div class="match-answer-box" id="ans25"></div>
+                    <select class="match-select" id="ans25">
+                        <option value="">Select...</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
                 </div>
-                <div class="match-row" data-q="26" data-letters="A,B,C,D,E,F,G">
+                <div class="match-row">
                     <span class="q-number">26.</span>
                     <span>Hairdressers</span>
-                    <div class="match-answer-box" id="ans26"></div>
+                    <select class="match-select" id="ans26">
+                        <option value="">Select...</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
                 </div>
-                <div class="match-row" data-q="27" data-letters="A,B,C,D,E,F,G">
+                <div class="match-row">
                     <span class="q-number">27.</span>
                     <span>Administrative staff</span>
-                    <div class="match-answer-box" id="ans27"></div>
+                    <select class="match-select" id="ans27">
+                        <option value="">Select...</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
                 </div>
-                <div class="match-row" data-q="28" data-letters="A,B,C,D,E,F,G">
+                <div class="match-row">
                     <span class="q-number">28.</span>
                     <span>Agricultural workers</span>
-                    <div class="match-answer-box" id="ans28"></div>
+                    <select class="match-select" id="ans28">
+                        <option value="">Select...</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
                 </div>
-                <div class="match-row" data-q="29" data-letters="A,B,C,D,E,F,G">
+                <div class="match-row">
                     <span class="q-number">29.</span>
                     <span>Care workers</span>
-                    <div class="match-answer-box" id="ans29"></div>
+                    <select class="match-select" id="ans29">
+                        <option value="">Select...</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
                 </div>
-                <div class="match-row" data-q="30" data-letters="A,B,C,D,E,F,G">
+                <div class="match-row">
                     <span class="q-number">30.</span>
                     <span>Bank clerks</span>
-                    <div class="match-answer-box" id="ans30"></div>
+                    <select class="match-select" id="ans30">
+                        <option value="">Select...</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
                 </div>
             </div>
 
@@ -540,21 +599,30 @@
 
             <button class="clear-btn" onclick="clearAll()">Clear All Answers</button>
 
-            <!-- NAVIGATION: Previous & Next ONLY - NO Home Button -->
+            <!-- NAVIGATION: Previous & Next - NO Home Button -->
             <div class="nav-container">
                 <a href="listening-test3-part2.html" class="nav-btn">← Previous Section</a>
-                <a href="#" class="nav-btn">Next Section →</a>
+                <a href="listening-test3-part4.html" class="nav-btn">Next Section →</a>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Load saved answers
-            for (let i = 21; i <= 30; i++) {
+            // Load saved answers for Q21-24 (Choose TWO)
+            for (let i = 21; i <= 24; i++) {
                 const saved = localStorage.getItem('L_P3_q' + i);
                 if (saved) {
                     document.getElementById('ans' + i).textContent = saved;
+                    markAnswered(i);
+                }
+            }
+
+            // Load saved answers for Q25-30 (Dropdown Matching)
+            for (let i = 25; i <= 30; i++) {
+                const saved = localStorage.getItem('L_P3_q' + i);
+                if (saved) {
+                    document.getElementById('ans' + i).value = saved;
                     markAnswered(i);
                 }
             }
@@ -589,18 +657,17 @@
                 });
             });
 
-            // ========== MATCHING click (Q25-30) — cycle through A-G ==========
-            document.querySelectorAll('.match-row').forEach(row => {
-                row.addEventListener('click', function() {
-                    const q = this.dataset.q;
-                    const letters = this.dataset.letters.split(',');
-                    const current = document.getElementById('ans' + q).textContent;
-                    let idx = letters.indexOf(current);
-                    idx = (idx + 1) % letters.length;
-                    const newLetter = letters[idx];
-                    document.getElementById('ans' + q).textContent = newLetter;
-                    localStorage.setItem('L_P3_q' + q, newLetter);
-                    markAnswered(q);
+            // ========== DROPDOWN Matching (Q25-30) ==========
+            document.querySelectorAll('.match-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    const qNum = parseInt(this.id.replace('ans', ''));
+                    const val = this.value;
+                    localStorage.setItem('L_P3_q' + qNum, val);
+                    if (val) {
+                        markAnswered(qNum);
+                    } else {
+                        unmarkAnswered(qNum);
+                    }
                 });
             });
 
@@ -713,7 +780,9 @@
             if (!confirm("Clear ALL answers, highlights, and notes for Part 3?")) return;
             for (let i = 21; i <= 30; i++) {
                 localStorage.removeItem('L_P3_q' + i);
-                document.getElementById('ans' + i).textContent = '';
+                const el = document.getElementById('ans' + i);
+                if (el.tagName === 'SELECT') el.value = '';
+                else el.textContent = '';
                 unmarkAnswered(i);
             }
             document.querySelectorAll('.option-row').forEach(r => r.classList.remove('selected'));
