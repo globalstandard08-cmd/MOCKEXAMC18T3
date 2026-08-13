@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambridge IELTS Practice - Cover</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #fef2f2; color: #1a1a1a; line-height: 1.7; }
+        .header { width: 100%; background: #fff; border-bottom: 2px solid #dc2626; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap:15px; }
+        .logo { width: 280px; height: auto; }
+        .flag { width: 160px; height: auto; border-radius: 4px; border: 1px solid #fecaca; }
+        .cover-container { max-width: 1100px; margin: 20px auto; padding: 30px 30px; background: #fff; border-radius: 12px; border: 1px solid #fecaca; text-align: center; }
+        h1 { color: #dc2626; font-size: 34px; margin-bottom: 10px; }
+        h2 { color: #991b1b; font-size: 22px; margin-bottom: 15px; }
+        .subtitle { font-size: 17px; color: #444; max-width: 750px; margin: 0 auto 20px; }
+        .select-type { margin: 20px 0; }
+        .select-type label { display: block; font-size: 16px; color: #333; margin-bottom: 10px; font-weight: 500; }
+        .type-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .type-btn { padding: 10px 24px; border: 2px solid #dc2626; background: white; color: #dc2626; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .type-btn.active, .type-btn:hover { background: #dc2626; color: white; }
+        .enter-btn { display: inline-block; padding: 14px 32px; background: #dc2626; color: white; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: 600; margin: 12px 0 8px; transition: background 0.2s; pointer-events: none; opacity: 0.5; }
+        .enter-btn.enabled { pointer-events: auto; opacity: 1; }
+        .enter-btn:hover { background: #b91c1c; }
+        .test-note { font-size: 15px; color: #555; margin-top: 10px; line-height: 1.6; }
+        .disclaimer { max-width: 1100px; margin: 20px auto; padding: 15px 20px; background: #fff; border-radius: 12px; border: 1px solid #fecaca; font-size: 12.5px; color: #555; text-align: justify; }
+        .disclaimer h3 { color: #dc2626; margin-bottom: 8px; font-size: 14px; }
+        @media (max-width:768px) {
+            .header { flex-direction: column; text-align: center; }
+            h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="ielts-logo.png" alt="IELTS Logo" class="logo">
+        <img src="flag.jpg" alt="Flag" class="flag">
+    </div>
 
+    <div class="cover-container">
+        <h1>CAMBRIDGE IELTS PRACTICE MATERIALS</h1>
+        <h2>Select Your Test Type</h2>
+        <p class="subtitle">Prepare effectively with authentic practice tests based on the official Cambridge IELTS format.</p>
+
+        <div class="select-type">
+            <label>Choose which version you want to practice:</label>
+            <div class="type-buttons">
+                <button class="type-btn" data-link="listening-part1.html">📚 ACADEMIC</button>
+                <button class="type-btn" data-link="listening-part1.html">👥 GENERAL TRAINING</button>
+            </div>
+        </div>
+
+        <a id="startBtn" href="#" class="enter-btn">📝 START IELTS MOCK TEST</a>
+        <p class="test-note">You are about to start the IELTS Listening Test.</p>
+    </div>
+
+    <div class="disclaimer">
+        <h3>Disclaimer</h3>
+        <p>No copyright infringement intended. All materials are for personal educational and self‑study purposes only. Original rights belong to Cambridge University Press & Assessment English. This is not an official product.</p>
+    </div>
+
+    <script>
+        const typeBtns = document.querySelectorAll('.type-btn');
+        const startBtn = document.getElementById('startBtn');
+        let selectedLink = null;
+
+        typeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active state from all
+                typeBtns.forEach(b => b.classList.remove('active'));
+                // Add active to clicked
+                btn.classList.add('active');
+                // Set link and enable start button
+                selectedLink = btn.dataset.link;
+                startBtn.href = selectedLink;
+                startBtn.classList.add('enabled');
+            });
+        });
+    </script>
+</body>
+</html>
