@@ -47,7 +47,7 @@
             font-size: 18px;
             font-weight: bold;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
 
@@ -112,7 +112,7 @@
             display: inline-block;
         }
 
-        /* ✅ ROUND RADIO BUTTONS — exactly like real IELTS exam */
+        /* ROUND RADIO BUTTONS — exactly like real IELTS exam */
         .option-row {
             display: flex;
             align-items: flex-start;
@@ -168,7 +168,7 @@
             font-weight: bold;
         }
 
-        /* ✅ HIGHLIGHT STYLE */
+        /* HIGHLIGHT STYLE */
         .user-highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -177,7 +177,7 @@
             color: #000;
         }
 
-        /* ✅ RIGHT-CLICK CONTEXT MENU */
+        /* RIGHT-CLICK CONTEXT MENU */
         .context-menu {
             position: absolute;
             background: #fff;
@@ -197,7 +197,7 @@
             background: #f0f0f0;
         }
 
-        /* ✅ DRAGGABLE STICKY NOTES */
+        /* DRAGGABLE STICKY NOTES */
         .sticky-note {
             position: absolute;
             width: 180px;
@@ -298,6 +298,7 @@
             background-color: #b91c1c;
         }
 
+        /* NAVIGATION — ONLY Previous / Next, NO Home Button */
         .nav-container {
             display: flex;
             justify-content: space-between;
@@ -308,43 +309,24 @@
         }
 
         .nav-btn {
-            width: 46px;
-            height: 46px;
             background-color: #1f3a5f;
             color: white;
             border: none;
-            border-radius: 50%;
-            font-size: 22px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 15px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-decoration: none;
+            font-weight: 500;
         }
 
         .nav-btn:hover {
             background-color: #2e568c;
         }
-
-        .back-main-btn {
-            background-color: #6b7280;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .back-main-btn:hover {
-            background-color: #4b5563;
-        }
     </style>
 </head>
 <body>
-    <!-- ✅ RIGHT-CLICK MENU -->
+    <!-- RIGHT-CLICK MENU -->
     <div class="context-menu" id="contextMenu">
         <div id="menuHighlight">✅ Highlight</div>
         <div id="menuRemove">❌ Remove Highlight</div>
@@ -357,8 +339,7 @@
         </div>
 
         <div class="header-bar">
-            <span>LISTENING TEST 3 - PART 2</span>
-            <span style="font-size:15px; opacity:0.9;">Exam Mode</span>
+            LISTENING - PART 2
         </div>
 
         <div class="audio-player">
@@ -373,7 +354,7 @@
         <div class="content" id="highlightArea">
             <h2>Section 2 – Questions 11–20</h2>
 
-            <!-- ========== Q11-12: Choose TWO ========== -->
+            <!-- Q11-12: Choose TWO -->
             <div class="instruction">
                 <strong>Questions 11 and 12</strong><br>
                 Choose <strong>TWO</strong> letters, A–E.
@@ -408,7 +389,7 @@
                 </div>
             </div>
 
-            <!-- ========== Q13-14: Choose TWO ========== -->
+            <!-- Q13-14: Choose TWO -->
             <div class="instruction">
                 <strong>Questions 13 and 14</strong><br>
                 Choose <strong>TWO</strong> letters, A–E.
@@ -443,7 +424,7 @@
                 </div>
             </div>
 
-            <!-- ========== Q15-20: Single Choice ========== -->
+            <!-- Q15-20: Single Choice -->
             <div class="instruction">
                 <strong>Questions 15–20</strong><br>
                 Choose the correct letter, <strong>A, B or C</strong>.
@@ -573,17 +554,17 @@
 
             <button class="clear-btn" onclick="clearAll()">Clear All Answers</button>
 
+            <!-- NAVIGATION: Previous & Next ONLY - NO Home Button -->
             <div class="nav-container">
-                <a href="listening-test3-part1.html" class="nav-btn">←</a>
-                <a href="index.html" class="back-main-btn">Home</a>
-                <a href="#" class="nav-btn">→</a>
+                <a href="listening-test3-part1.html" class="nav-btn">← Previous Section</a>
+                <a href="#" class="nav-btn">Next Section →</a>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Load saved answers ---
+            // Load saved answers
             for (let i = 11; i <= 20; i++) {
                 const saved = localStorage.getItem('L_P2_q' + i);
                 if (saved) {
@@ -592,7 +573,7 @@
                 }
             }
 
-            // --- Single choice click (Q15-20) ---
+            // Single choice click (Q15-20)
             document.querySelectorAll('.option-row.single').forEach(row => {
                 row.addEventListener('click', function() {
                     const q = this.dataset.q;
@@ -608,7 +589,7 @@
                 });
             });
 
-            // --- TWO choice click (Q11-12 and Q13-14) ---
+            // TWO choice click (Q11-12 and Q13-14)
             const multiGroups = [
                 { qs: ['11','12'] },
                 { qs: ['13','14'] }
@@ -638,9 +619,7 @@
                 });
             });
 
-            // ==========================================
-            // ✅ RIGHT-CLICK HIGHLIGHT & DRAGGABLE NOTES
-            // ==========================================
+            // RIGHT-CLICK HIGHLIGHT & DRAGGABLE NOTES
             const highlightArea = document.getElementById('highlightArea');
             const contextMenu = document.getElementById('contextMenu');
             let currentRange = null;
@@ -648,7 +627,6 @@
             let activeNote = null;
             let dragOffset = { x: 0, y: 0 };
 
-            // Show menu on right-click with text selected
             highlightArea.addEventListener('contextmenu', function(e) {
                 const sel = window.getSelection();
                 if (!sel || sel.isCollapsed || !sel.toString().trim()) {
@@ -663,12 +641,11 @@
                 contextMenu.style.display = 'block';
             });
 
-            // Hide menu when clicking elsewhere
             document.addEventListener('click', () => {
                 contextMenu.style.display = 'none';
             });
 
-            // ✅ Highlight selected text
+            // Highlight
             document.getElementById('menuHighlight').addEventListener('click', function() {
                 if (!currentRange) return;
                 const span = document.createElement('span');
@@ -680,14 +657,14 @@
                 currentRange = null;
             });
 
-            // ✅ Remove highlight
+            // Remove Highlight
             document.getElementById('menuRemove').addEventListener('click', function() {
                 if (!currentRange) return;
                 try {
-                    let span = currentRange.commonAncestorContainer;
-                    if (span.nodeType === Node.TEXT_NODE) span = span.parentElement;
-                    if (span?.classList.contains('user-highlight')) {
-                        span.replaceWith(document.createTextNode(span.textContent));
+                    let container = currentRange.commonAncestorContainer;
+                    if (container.nodeType === Node.TEXT_NODE) container = container.parentElement;
+                    if (container && container.classList.contains('user-highlight')) {
+                        container.replaceWith(document.createTextNode(container.textContent));
                         highlightArea.normalize();
                     }
                 } catch (e) {}
@@ -695,7 +672,7 @@
                 currentRange = null;
             });
 
-            // ✅ Add Draggable Sticky Note
+            // Add Note
             document.getElementById('menuNote').addEventListener('click', function() {
                 if (!currentRange) return;
                 const rect = currentRange.getBoundingClientRect();
@@ -706,14 +683,14 @@
                 note.className = 'sticky-note';
                 note.id = noteId;
                 note.innerHTML = `
-                    <div class="note-header">Note <span class="note-close" data-note="${noteId}">×</span></div>
+                    <div class="note-header">Note <span class="note-close" data-id="${noteId}">×</span></div>
                     <textarea class="note-textarea" placeholder="Type your note..."></textarea>
                 `;
                 note.style.left = (rect.right + window.scrollX + 10) + 'px';
                 note.style.top = (rect.top + window.scrollY) + 'px';
                 document.body.appendChild(note);
 
-                // Make note draggable
+                // Drag handler
                 note.querySelector('.note-header').addEventListener('mousedown', function(e) {
                     activeNote = note;
                     const noteRect = note.getBoundingClientRect();
@@ -722,7 +699,7 @@
                     e.preventDefault();
                 });
 
-                // Close note button
+                // Close note
                 note.querySelector('.note-close').addEventListener('click', function() {
                     document.getElementById(noteId)?.remove();
                 });
@@ -731,24 +708,20 @@
                 currentRange = null;
             });
 
-            // Global drag handler
+            // Global drag
             document.addEventListener('mousemove', function(e) {
                 if (!activeNote) return;
                 activeNote.style.left = (e.pageX - dragOffset.x) + 'px';
                 activeNote.style.top = (e.pageY - dragOffset.y) + 'px';
             });
-            document.addEventListener('mouseup', function() {
-                activeNote = null;
-            });
+            document.addEventListener('mouseup', () => { activeNote = null; });
         });
 
         function markAnswered(qNum) {
-            const el = document.querySelector(`.q-indicator[data-q="${qNum}"]`);
-            if (el) el.classList.add('answered');
+            document.querySelector(`.q-indicator[data-q="${qNum}"]`)?.classList.add('answered');
         }
         function unmarkAnswered(qNum) {
-            const el = document.querySelector(`.q-indicator[data-q="${qNum}"]`);
-            if (el) el.classList.remove('answered');
+            document.querySelector(`.q-indicator[data-q="${qNum}"]`)?.classList.remove('answered');
         }
 
         function clearAll() {
@@ -759,10 +732,8 @@
                 unmarkAnswered(i);
             }
             document.querySelectorAll('.option-row').forEach(r => r.classList.remove('selected'));
-            document.querySelectorAll('.user-highlight').forEach(span => {
-                span.replaceWith(document.createTextNode(span.textContent));
-            });
-            document.querySelectorAll('.sticky-note').forEach(note => note.remove());
+            document.querySelectorAll('.user-highlight').forEach(s => s.replaceWith(document.createTextNode(s.textContent)));
+            document.querySelectorAll('.sticky-note').forEach(n => n.remove());
         }
     </script>
 </body>
