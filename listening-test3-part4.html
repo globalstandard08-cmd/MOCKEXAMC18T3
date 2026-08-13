@@ -559,6 +559,37 @@
                 activeNote.style.top = (e.pageY - dragOffset.y) + 'px';
             });
             document.addEventListener('mouseup', () => { activeNote = null; });
+
+            // ✅ SAVE ALL LISTENING ANSWERS FOR REVIEW PAGE — RUNS ON PAGE LOAD
+            function saveAllListeningAnswers() {
+                const allAnswers = {};
+                // Part 1: Q1–Q10
+                for (let i = 1; i <= 10; i++) {
+                    allAnswers['q' + i] = localStorage.getItem('L_P1_q' + i) || '';
+                }
+                // Part 2: Q11–Q20
+                for (let i = 11; i <= 20; i++) {
+                    allAnswers['q' + i] = localStorage.getItem('L_P2_q' + i) || '';
+                }
+                // Part 3: Q21–Q30
+                for (let i = 21; i <= 30; i++) {
+                    allAnswers['q' + i] = localStorage.getItem('L_P3_q' + i) || '';
+                }
+                // Part 4: Q31–Q40
+                for (let i = 31; i <= 40; i++) {
+                    allAnswers['q' + i] = localStorage.getItem('L_P4_q' + i) || '';
+                }
+                // Save for review page to read
+                localStorage.setItem('listening-answers', JSON.stringify(allAnswers));
+            }
+
+            // Save once when page finishes loading
+            saveAllListeningAnswers();
+
+            // Also save every time user types any answer
+            document.querySelectorAll('.answer-input').forEach(input => {
+                input.addEventListener('input', saveAllListeningAnswers);
+            });
         });
 
         function markAnswered(qNum) {
