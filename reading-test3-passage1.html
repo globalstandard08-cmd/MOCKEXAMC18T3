@@ -227,7 +227,7 @@
             justify-content: center;
             border-radius: 3px;
             border: 1px solid #ddd;
-            background: #e5e7eb !important; /* ⚪ Gray = Unanswered */
+            background: #e5e7eb !important;
             color: #333;
             font-size: 11px;
             cursor: pointer;
@@ -237,16 +237,15 @@
             opacity: 0.9;
         }
         .q-indicator.answered {
-            background: #10b981 !important; /* 🟢 Green = Answered */
+            background: #10b981 !important;
             color: white !important;
             border-color: #10b981 !important;
         }
         .q-indicator.flagged {
-            background: #fd7e14 !important; /* 🟠 Orange = FLAGGED — REAL IELTS PRIORITY */
+            background: #fd7e14 !important;
             color: white !important;
             border-color: #fd7e14 !important;
         }
-        /* ✅ FLAG WINS — If BOTH flagged AND answered → SHOW ORANGE (Real IELTS behavior) */
         .q-indicator.answered.flagged {
             background: #fd7e14 !important;
             border-color: #fd7e14 !important;
@@ -255,7 +254,7 @@
             border: 2px solid #1f3a5f !important;
         }
 
-        /* ✅ NAV & ACTION BUTTONS — NAVY THEME */
+        /* ✅ NAV & ACTION BUTTONS — CLEANED VERSION */
         .bottom-controls {
             display: flex;
             justify-content: space-between;
@@ -270,25 +269,13 @@
             flex-wrap: wrap;
         }
 
-        .toggle-answers, .show-student, .clear-answers {
+        .clear-answers {
             padding: 6px 12px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
             font-size: 13px;
-        }
-
-        .toggle-answers, .show-student {
-            background: #1f3a5f;
-            color: white;
-        }
-
-        .toggle-answers:hover, .show-student:hover {
-            background: #2e568c;
-        }
-
-        .clear-answers {
             background: #6b7280;
             color: white;
         }
@@ -319,20 +306,6 @@
         .back-btn:hover, .next-btn:hover {
             background: #ffffff;
         }
-
-        .answers-box, .student-answers-box {
-            margin-top: 12px;
-            padding: 12px;
-            background: #f0f4f8;
-            border: 1px solid #c5d2e3;
-            border-radius: 8px;
-            display: none;
-            font-size: 13px;
-        }
-
-        .correct { color: #10b981; font-weight: 600; }
-        .wrong { color: #dc2626; font-weight: 600; }
-        .no-answer { color: #888; }
     </style>
 </head>
 <body>
@@ -525,30 +498,6 @@
                         <label><input type="radio" name="q13" value="D"> D</label>
                     </div>
                 </div>
-
-                <!-- ✅ CORRECT ANSWER KEY -->
-                <div class="answers-box" id="answersBox">
-                    <h3>✅ Correct Answers — Passage 1</h3>
-                    <p><strong>1.</strong> G<br>
-                    <strong>2.</strong> D<br>
-                    <strong>3.</strong> C<br>
-                    <strong>4.</strong> F<br>
-                    <strong>5.</strong> climate change<br>
-                    <strong>6.</strong> moisture<br>
-                    <strong>7.</strong> layers<br>
-                    <strong>8.</strong> speed<br>
-                    <strong>9.</strong> C<br>
-                    <strong>10.</strong> A<br>
-                    <strong>11.</strong> B<br>
-                    <strong>12.</strong> D<br>
-                    <strong>13.</strong> A</p>
-                </div>
-
-                <!-- ✅ STUDENT ANSWERS & RESULT -->
-                <div class="student-answers-box" id="studentAnswersBox">
-                    <h3>📝 Your Answers & Score</h3>
-                    <div id="studentResult"></div>
-                </div>
             </div>
         </div>
     </div>
@@ -561,8 +510,6 @@
 
         <div class="bottom-controls">
             <div class="action-buttons">
-                <button class="toggle-answers" onclick="toggleAnswers()">👁️ Show/Hide Answers</button>
-                <button class="show-student" onclick="showStudentAnswers()">📝 Check My Answers</button>
                 <button class="clear-answers" onclick="clearAllAnswers()">🗑️ Clear All Answers</button>
             </div>
             <div class="nav-buttons">
@@ -581,23 +528,6 @@
         let dragNote = null;
         let dragOffsetX = 0;
         let dragOffsetY = 0;
-
-        // ✅ Correct answer data
-        const correctAnswers = {
-            q1: 'G',
-            q2: 'D',
-            q3: 'C',
-            q4: 'F',
-            q5: 'climate change',
-            q6: 'moisture',
-            q7: 'layers',
-            q8: 'speed',
-            q9: 'C',
-            q10: 'A',
-            q11: 'B',
-            q12: 'D',
-            q13: 'A'
-        };
 
         // ✅ Initialize Question Navigator 1–40
         function initQuestionNav() {
@@ -855,65 +785,16 @@
                 const hasAnswer = val.length > 0;
                 const isFlagged = localStorage.getItem(`${passageId}_flag_${q}`) === 'true';
 
-                // ✅ REAL IELTS RULE: If flagged → show ORANGE, regardless of answered status
                 statBtn.classList.remove('answered', 'flagged');
                 if (isFlagged) {
-                    statBtn.classList.add('flagged'); // 🟠 Orange wins
+                    statBtn.classList.add('flagged');
                 } else if (hasAnswer) {
-                    statBtn.classList.add('answered'); // 🟢 Green only if NOT flagged
+                    statBtn.classList.add('answered');
                 }
 
                 const flagIcon = document.getElementById('flag' + q);
                 if (flagIcon) flagIcon.classList.toggle('flagged', isFlagged);
             }
-        }
-
-        // ✅ Toggle answers
-        function toggleAnswers() {
-            const box = document.getElementById('answersBox');
-            box.style.display = box.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // ✅ Check answers
-        function showStudentAnswers() {
-            saveAnswers();
-            const box = document.getElementById('studentAnswersBox');
-            const resultDiv = document.getElementById('studentResult');
-            let html = '';
-            let score = 0;
-
-            for (let q = 1; q <= 13; q++) {
-                let studentAns = '';
-                const radios = document.getElementsByName(`q${q}`);
-                if (radios.length > 0) {
-                    for (let r of radios) {
-                        if (r.checked) studentAns = r.value;
-                    }
-                } else {
-                    const input = document.querySelector(`input[name="q${q}"]`);
-                    if (input) studentAns = input.value.trim().toLowerCase();
-                }
-
-                const correct = correctAnswers[`q${q}`] || '-';
-                const correctNorm = correct.toString().trim().toLowerCase();
-                const studentNorm = studentAns.trim().toLowerCase();
-
-                let status = '';
-                if (!studentAns) {
-                    status = '<span class="no-answer">(No Answer)</span>';
-                } else if (studentNorm === correctNorm) {
-                    status = '<span class="correct">✅ Correct</span>';
-                    score++;
-                } else {
-                    status = `<span class="wrong">❌ Wrong (Correct: ${correct})</span>`;
-                }
-
-                html += `<strong>${q}.</strong> Your answer: ${studentAns || '-'} &nbsp; ${status}<br>`;
-            }
-
-            html += `<br><strong>Total Score: ${score} / 13</strong>`;
-            resultDiv.innerHTML = html;
-            box.style.display = box.style.display === 'block' ? 'none' : 'block';
         }
 
         // ✅ Clear All
@@ -935,7 +816,6 @@
             localStorage.removeItem(`${passageId}_questions_highlights`);
             localStorage.removeItem(`${passageId}_notes`);
             
-            document.getElementById('studentAnswersBox').style.display = 'none';
             updateStatus();
         }
 
