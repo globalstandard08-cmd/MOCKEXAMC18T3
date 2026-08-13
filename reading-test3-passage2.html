@@ -137,10 +137,9 @@
         }
 
         .answer-input {
-            width: 100%;
-            padding: 6px 10px;
+            padding: 4px 6px;
             border: 1px solid #c5d2e3;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 14px;
             background: #f0f4f8;
         }
@@ -155,6 +154,21 @@
         .heading-list p {
             margin-bottom: 4px;
             font-size: 13.5px;
+        }
+
+        .summary-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin: 10px 0;
+        }
+        .summary-box p {
+            margin-bottom: 12px;
+            font-weight: normal;
+        }
+        .summary-box p:last-child {
+            margin-bottom: 0;
         }
 
         /* ✅ RIGHT-CLICK MENU */
@@ -470,28 +484,12 @@
                 <h2>Questions 24–26</h2>
                 <p><em>Complete the summary below. Choose ONE WORD AND/OR A NUMBER from the passage for each answer.</em></p>
 
-                <div class="question-block" id="q24">
-                    <div class="question-header">
-                        <span class="flag-btn" onclick="toggleFlag(24)" id="flag24">🚩</span>
-                        <p><strong>24.</strong> A later version of the Model E raised its __________, while keeping its emissions extremely low.</p>
-                    </div>
-                    <input type="text" class="answer-input" name="q24" placeholder="Write ONE WORD / NUMBER">
-                </div>
+                <div class="summary-box">
+                    <p>The Model E was road-tested in 1924 by the Automobile Club of America. They found it easy to drive, despite its weight, and it impressed the spectators. A later version of the Model E raised its <strong>24.</strong> <input type="text" class="answer-input" name="q24" placeholder="?" style="width:90px;">, while keeping its emissions extremely low.</p>
 
-                <div class="question-block" id="q25">
-                    <div class="question-header">
-                        <span class="flag-btn" onclick="toggleFlag(25)" id="flag25">🚩</span>
-                        <p><strong>25.</strong> Under __________ cars were produced before the company went out of business.</p>
-                    </div>
-                    <input type="text" class="answer-input" name="q25" placeholder="Write ONE WORD / NUMBER">
-                </div>
+                    <p>The steam car was too expensive for many people and its design was constantly being altered. Under <strong>25.</strong> <input type="text" class="answer-input" name="q25" placeholder="?" style="width:90px;"> cars were produced before the company went out of business.</p>
 
-                <div class="question-block" id="q26">
-                    <div class="question-header">
-                        <span class="flag-btn" onclick="toggleFlag(26)" id="flag26">🚩</span>
-                        <p><strong>26.</strong> They are straightforward to maintain, and they satisfy California's __________ emissions laws.</p>
-                    </div>
-                    <input type="text" class="answer-input" name="q26" placeholder="Write ONE WORD / NUMBER">
+                    <p>However, even today, there are Model Es on the road in the US. They are straightforward to maintain, and they satisfy California's <strong>26.</strong> <input type="text" class="answer-input" name="q26" placeholder="?" style="width:90px;"> emissions laws. Perhaps today's technology and materials would help us revive the steam car.</p>
                 </div>
             </div>
         </div>
