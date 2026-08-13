@@ -13,22 +13,22 @@
         }
 
         body {
-            background-color: #fef2f2;
+            background-color: #f0f4f8;
             color: #1a1a1a;
             line-height: 1.6;
         }
 
-        /* ✅ LOGO STYLES */
+        /* ✅ LOGO STYLES — NAVY THEME */
         .logo-container {
             width: 100%;
             background: #ffffff;
-            border-bottom: 2px solid #dc2626;
+            border-bottom: 2px solid #1f3a5f;
             padding: 10px 0;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 12px;
-            box-shadow: 0 2px 6px rgba(220, 38, 38, 0.12);
+            box-shadow: 0 2px 6px rgba(31, 58, 95, 0.12);
         }
         .logo {
             width: 35%;
@@ -49,15 +49,15 @@
             flex: 1;
             background: #ffffff;
             border-radius: 10px;
-            border: 1px solid #fecaca;
+            border: 1px solid #c5d2e3;
             padding: 18px;
             overflow-y: auto;
-            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.07);
+            box-shadow: 0 2px 8px rgba(31, 58, 95, 0.07);
             position: relative;
         }
 
         h1 {
-            color: #dc2626;
+            color: #1f3a5f;
             font-size: 19px;
             margin-bottom: 14px;
             text-align: center;
@@ -69,7 +69,7 @@
             line-height: 1.8;
         }
 
-        /* ✅ DARK YELLOW HIGHLIGHT */
+        /* ✅ DARK YELLOW HIGHLIGHT — SAME AS LISTENING */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -80,7 +80,7 @@
         }
 
         .questions-section h2 {
-            color: #991b1b;
+            color: #1f3a5f;
             font-size: 17px;
             margin: 15px 0 8px;
         }
@@ -104,7 +104,7 @@
             user-select: none;
         }
         .flag-btn.flagged {
-            color: #e67700;
+            color: #fd7e14;
         }
 
         .question-block p {
@@ -125,10 +125,10 @@
         .answer-input {
             width: 100%;
             padding: 6px 10px;
-            border: 1px solid #fecaca;
+            border: 1px solid #c5d2e3;
             border-radius: 6px;
             font-size: 14px;
-            background: #fef2f2;
+            background: #f0f4f8;
         }
 
         /* ✅ RIGHT-CLICK CONTEXT MENU */
@@ -148,7 +148,7 @@
             font-size: 13px;
         }
         .context-menu div:hover {
-            background: #fef2f2;
+            background: #f0f4f8;
         }
 
         /* ✅ STICKY NOTES - DRAGGABLE */
@@ -199,14 +199,14 @@
             padding: 10px 12px;
             background: #ffffff;
             border-radius: 8px;
-            border: 1px solid #fecaca;
-            box-shadow: 0 -2px 5px rgba(220, 38, 38, 0.07);
+            border: 1px solid #c5d2e3;
+            box-shadow: 0 -2px 5px rgba(31, 58, 95, 0.07);
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        /* ✅ QUESTION NAVIGATOR */
+        /* ✅ QUESTION NAVIGATOR — REAL IELTS COLOR PRIORITY */
         .question-nav {
             display: flex;
             flex-wrap: wrap;
@@ -215,7 +215,7 @@
         }
         .nav-label {
             font-weight: 600;
-            color: #991b1b;
+            color: #1f3a5f;
             font-size: 13px;
             margin-right: 4px;
         }
@@ -227,7 +227,7 @@
             justify-content: center;
             border-radius: 3px;
             border: 1px solid #ddd;
-            background: #e5e7eb !important;
+            background: #e5e7eb !important; /* ⚪ Gray = Unanswered */
             color: #333;
             font-size: 11px;
             cursor: pointer;
@@ -237,23 +237,25 @@
             opacity: 0.9;
         }
         .q-indicator.answered {
-            background: #198754 !important;
+            background: #10b981 !important; /* 🟢 Green = Answered */
             color: white !important;
-            border-color: #198754 !important;
+            border-color: #10b981 !important;
         }
         .q-indicator.flagged {
-            background: #fd7e14 !important;
+            background: #fd7e14 !important; /* 🟠 Orange = FLAGGED — REAL IELTS PRIORITY */
             color: white !important;
             border-color: #fd7e14 !important;
         }
+        /* ✅ FLAG WINS — If BOTH flagged AND answered → SHOW ORANGE (Real IELTS behavior) */
         .q-indicator.answered.flagged {
             background: #fd7e14 !important;
+            border-color: #fd7e14 !important;
         }
         .q-indicator.current {
-            border: 2px solid #dc2626 !important;
+            border: 2px solid #1f3a5f !important;
         }
 
-        /* ✅ NAV & ACTION BUTTONS */
+        /* ✅ NAV & ACTION BUTTONS — NAVY THEME */
         .bottom-controls {
             display: flex;
             justify-content: space-between;
@@ -278,12 +280,12 @@
         }
 
         .toggle-answers, .show-student {
-            background: #dc2626;
+            background: #1f3a5f;
             color: white;
         }
 
         .toggle-answers:hover, .show-student:hover {
-            background: #b91c1c;
+            background: #2e568c;
         }
 
         .clear-answers {
@@ -302,11 +304,11 @@
 
         .back-btn, .next-btn {
             padding: 6px 12px;
-            background: #fef2f2;
-            color: #dc2626;
+            background: #f0f4f8;
+            color: #1f3a5f;
             text-decoration: none;
             border-radius: 6px;
-            border: 1px solid #fecaca;
+            border: 1px solid #c5d2e3;
             font-weight: 500;
             cursor: pointer;
             font-size: 13px;
@@ -321,15 +323,15 @@
         .answers-box, .student-answers-box {
             margin-top: 12px;
             padding: 12px;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
+            background: #f0f4f8;
+            border: 1px solid #c5d2e3;
             border-radius: 8px;
             display: none;
             font-size: 13px;
         }
 
-        .correct { color: green; font-weight: 600; }
-        .wrong { color: red; font-weight: 600; }
+        .correct { color: #10b981; font-weight: 600; }
+        .wrong { color: #dc2626; font-weight: 600; }
         .no-answer { color: #888; }
     </style>
 </head>
@@ -619,7 +621,7 @@
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // ✅ Toggle Flag
+        // ✅ Toggle Flag — Real IELTS behavior
         function toggleFlag(qNum) {
             const flag = document.getElementById('flag' + qNum);
             const stat = document.getElementById('stat' + qNum);
@@ -838,7 +840,7 @@
             updateStatus();
         }
 
-        // ✅ Update status colors
+        // ✅ Update status colors — REAL IELTS PRIORITY: FLAG > ANSWERED
         function updateStatus() {
             const savedAnswers = localStorage.getItem(`${passageId}_answers`);
             const answers = savedAnswers ? JSON.parse(savedAnswers) : {};
@@ -853,11 +855,12 @@
                 const hasAnswer = val.length > 0;
                 const isFlagged = localStorage.getItem(`${passageId}_flag_${q}`) === 'true';
 
+                // ✅ REAL IELTS RULE: If flagged → show ORANGE, regardless of answered status
                 statBtn.classList.remove('answered', 'flagged');
                 if (isFlagged) {
-                    statBtn.classList.add('flagged');
+                    statBtn.classList.add('flagged'); // 🟠 Orange wins
                 } else if (hasAnswer) {
-                    statBtn.classList.add('answered');
+                    statBtn.classList.add('answered'); // 🟢 Green only if NOT flagged
                 }
 
                 const flagIcon = document.getElementById('flag' + q);
