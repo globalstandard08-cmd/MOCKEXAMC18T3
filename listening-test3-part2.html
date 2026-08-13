@@ -109,7 +109,7 @@
             display: inline-block;
         }
 
-        /* ✅ CHECKBOX / TICK BOX STYLE OPTIONS */
+        /* ✅ ROUND RADIO BUTTONS — exactly like real IELTS exam */
         .option-row {
             display: flex;
             align-items: flex-start;
@@ -124,55 +124,45 @@
             background-color: #eef2f7;
         }
 
-        .option-row.selected {
-            background-color: #d4e3fc;
-            font-weight: 600;
-            color: #1f3a5f;
-        }
-
-        .tick-box {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
+        .radio-circle {
+            width: 22px;
+            height: 22px;
             border: 2px solid #9ca3af;
-            border-radius: 4px;
+            border-radius: 50%;
             margin-right: 12px;
             flex-shrink: 0;
+            position: relative;
             background: white;
-            font-weight: bold;
-            font-size: 15px;
-            color: transparent;
             transition: all 0.15s;
         }
 
-        .option-row.selected .tick-box {
+        .option-row.selected .radio-circle {
             border-color: #1f3a5f;
-            background-color: #1f3a5f;
-            color: white;
-            content: "✓";
+            border-width: 6px;
+            background-color: #fff;
         }
 
         .answer-display {
-            margin-top: 12px;
-            padding: 8px 12px;
+            margin-top: 14px;
+            padding: 10px 14px;
             background: #f0f4f8;
             border-radius: 4px;
             font-weight: 500;
             color: #1f3a5f;
-            min-height: 36px;
+            min-height: 40px;
+            font-size: 15px;
         }
 
         .answer-display span {
             display: inline-block;
             background: #1f3a5f;
             color: white;
-            padding: 2px 10px;
+            padding: 3px 12px;
             border-radius: 4px;
             margin: 0 4px;
-            min-width: 32px;
+            min-width: 34px;
             text-align: center;
+            font-weight: bold;
         }
 
         /* Status Bar */
@@ -202,7 +192,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 2px;
+            border-radius: 50%;
             border: 1px solid #d1d5db;
             background: #e5e7eb;
             color: #333;
@@ -312,23 +302,23 @@
                 <div class="q-group-title">Which TWO warnings does Dan give about picking mushrooms?</div>
 
                 <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="A">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>A</strong> Don't pick more than one variety of mushroom at a time.</span>
                 </div>
                 <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="B">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>B</strong> Don't pick mushrooms near busy roads.</span>
                 </div>
                 <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="C">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>C</strong> Don't eat mushrooms given to you.</span>
                 </div>
                 <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="D">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>D</strong> Don't eat mushrooms while picking them.</span>
                 </div>
                 <div class="option-row multi-2" data-q1="11" data-q2="12" data-val="E">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>E</strong> Don't pick old mushrooms.</span>
                 </div>
 
@@ -347,23 +337,23 @@
                 <div class="q-group-title">Which TWO ideas about wild mushrooms does Dan say are correct?</div>
 
                 <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="A">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>A</strong> Mushrooms should always be peeled before eating.</span>
                 </div>
                 <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="B">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>B</strong> Mushrooms eaten by animals may be unsafe.</span>
                 </div>
                 <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="C">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>C</strong> Cooking destroys toxins in mushrooms.</span>
                 </div>
                 <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="D">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>D</strong> Brightly coloured mushrooms can be edible.</span>
                 </div>
                 <div class="option-row multi-2" data-q1="13" data-q2="14" data-val="E">
-                    <span class="tick-box"></span>
+                    <div class="radio-circle"></div>
                     <span><strong>E</strong> All poisonous mushrooms have a bad smell.</span>
                 </div>
 
@@ -379,91 +369,91 @@
             </div>
 
             <div class="question-block">
-                <div style="margin-bottom:14px;">
+                <div style="margin-bottom:16px;">
                     <span class="q-number">15.</span>
                     <span>What advice does Dan give about picking mushrooms in parks?</span>
                     <div class="option-row single" data-q="15" data-val="A">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>A</strong> Choose wooded areas.</span>
                     </div>
                     <div class="option-row single" data-q="15" data-val="B">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>B</strong> Don't disturb wildlife.</span>
                     </div>
                     <div class="option-row single" data-q="15" data-val="C">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>C</strong> Get there early.</span>
                     </div>
                     <div class="answer-display">Answer: <span id="ans15"></span></div>
                 </div>
 
-                <div style="margin-bottom:14px;">
+                <div style="margin-bottom:16px;">
                     <span class="q-number">16.</span>
                     <span>Dan says it is a good idea for beginners to</span>
                     <div class="option-row single" data-q="16" data-val="A">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>A</strong> use a mushroom app.</span>
                     </div>
                     <div class="option-row single" data-q="16" data-val="B">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>B</strong> join a group.</span>
                     </div>
                     <div class="option-row single" data-q="16" data-val="C">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>C</strong> take a reference book.</span>
                     </div>
                     <div class="answer-display">Answer: <span id="ans16"></span></div>
                 </div>
 
-                <div style="margin-bottom:14px;">
+                <div style="margin-bottom:16px;">
                     <span class="q-number">17.</span>
                     <span>What does Dan say is important for conservation?</span>
                     <div class="option-row single" data-q="17" data-val="A">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>A</strong> selecting only fully grown mushrooms</span>
                     </div>
                     <div class="option-row single" data-q="17" data-val="B">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>B</strong> picking a limited amount of mushrooms</span>
                     </div>
                     <div class="option-row single" data-q="17" data-val="C">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>C</strong> avoiding areas where rare mushroom species grow</span>
                     </div>
                     <div class="answer-display">Answer: <span id="ans17"></span></div>
                 </div>
 
-                <div style="margin-bottom:14px;">
+                <div style="margin-bottom:16px;">
                     <span class="q-number">18.</span>
                     <span>According to Dan, some varieties of wild mushrooms are in decline because there is</span>
                     <div class="option-row single" data-q="18" data-val="A">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>A</strong> a huge demand for them from restaurants.</span>
                     </div>
                     <div class="option-row single" data-q="18" data-val="B">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>B</strong> a lack of rain in this part of the country.</span>
                     </div>
                     <div class="option-row single" data-q="18" data-val="C">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>C</strong> a rise in building developments locally.</span>
                     </div>
                     <div class="answer-display">Answer: <span id="ans18"></span></div>
                 </div>
 
-                <div style="margin-bottom:14px;">
+                <div style="margin-bottom:16px;">
                     <span class="q-number">19.</span>
                     <span>Dan says that when storing mushrooms, people should</span>
                     <div class="option-row single" data-q="19" data-val="A">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>A</strong> keep them in the fridge for no more than two days.</span>
                     </div>
                     <div class="option-row single" data-q="19" data-val="B">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>B</strong> keep them in a brown bag in a dark room.</span>
                     </div>
                     <div class="option-row single" data-q="19" data-val="C">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>C</strong> leave them for a period after washing them.</span>
                     </div>
                     <div class="answer-display">Answer: <span id="ans19"></span></div>
@@ -473,15 +463,15 @@
                     <span class="q-number">20.</span>
                     <span>What does Dan say about trying new varieties of mushrooms?</span>
                     <div class="option-row single" data-q="20" data-val="A">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>A</strong> Experiment with different recipes.</span>
                     </div>
                     <div class="option-row single" data-q="20" data-val="B">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>B</strong> Expect some to have a strong taste.</span>
                     </div>
                     <div class="option-row single" data-q="20" data-val="C">
-                        <span class="tick-box"></span>
+                        <div class="radio-circle"></div>
                         <span><strong>C</strong> Cook them for a long time.</span>
                     </div>
                     <div class="answer-display">Answer: <span id="ans20"></span></div>
@@ -542,8 +532,8 @@
 
             // --- TWO choice click (Q11-12 and Q13-14) ---
             const multiGroups = [
-                { qs: ['11','12'], prefix: '1112' },
-                { qs: ['13','14'], prefix: '1314' }
+                { qs: ['11','12'] },
+                { qs: ['13','14'] }
             ];
 
             multiGroups.forEach(group => {
@@ -569,8 +559,8 @@
                         document.getElementById('ans' + group.qs[0]).textContent = arr[0] || '';
                         document.getElementById('ans' + group.qs[1]).textContent = arr[1] || '';
                         // Update status
-                        if (arr[0]) markAnswered(group.qs[0]); else unmarkAnswered(group.qs[0]);
-                        if (arr[1]) markAnswered(group.qs[1]); else unmarkAnswered(group.qs[1]);
+                        arr[0] ? markAnswered(group.qs[0]) : unmarkAnswered(group.qs[0]);
+                        arr[1] ? markAnswered(group.qs[1]) : unmarkAnswered(group.qs[1]);
                     });
                 });
             });
