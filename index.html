@@ -62,17 +62,12 @@
     <script>
         const typeBtns = document.querySelectorAll('.type-btn');
         const startBtn = document.getElementById('startBtn');
-        let selectedLink = null;
 
         typeBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Remove active state from all
                 typeBtns.forEach(b => b.classList.remove('active'));
-                // Add active to clicked
                 btn.classList.add('active');
-                // Set link and enable start button
-                selectedLink = btn.dataset.link;
-                startBtn.href = selectedLink;
+                startBtn.href = "listening-test3-part1.html";
                 startBtn.classList.add('enabled');
             });
         });
