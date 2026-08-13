@@ -749,6 +749,21 @@
             }
             localStorage.setItem(`${passageId}_answers`, JSON.stringify(answers));
             updateStatus();
+            saveCombinedReadingAnswers();
+        }
+
+        // ✅ COMBINED SAVE — Saves Passage 1 answers to the full reading set
+        function saveCombinedReadingAnswers() {
+            const savedAll = localStorage.getItem('reading-answers') || '{}';
+            const allAnswers = JSON.parse(savedAll);
+            const savedPassage = localStorage.getItem(`${passageId}_answers`) || '{}';
+            const passageAnswers = JSON.parse(savedPassage);
+            for (let q = 1; q <= 13; q++) {
+                if (passageAnswers[`q${q}`]) {
+                    allAnswers[`q${q}`] = passageAnswers[`q${q}`];
+                }
+            }
+            localStorage.setItem('reading-answers', JSON.stringify(allAnswers));
         }
 
         // ✅ Load saved answers
