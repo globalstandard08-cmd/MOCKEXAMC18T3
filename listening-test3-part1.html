@@ -302,51 +302,15 @@
             border-color: #10b981;
         }
 
-        /* Answers Section */
-        .answers-section {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #f0f8ff;
-            border: 1px solid #b0d4f1;
-            border-radius: 6px;
-        }
-
-        .answers-section h3 {
-            color: #1f3a5f;
-            margin-bottom: 15px;
-        }
-
-        .answers-content {
-            display: none;
-            padding: 15px;
-            background: white;
-            border-radius: 4px;
-            line-height: 2;
-            margin-top: 10px;
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .show-btn, .clear-btn {
-            background-color: #1f3a5f;
+        .clear-btn {
+            background-color: #dc2626;
             color: white;
             border: none;
             padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
-        }
-
-        .clear-btn {
-            background-color: #dc2626;
-        }
-
-        .show-btn:hover {
-            background-color: #2e568c;
+            margin-top: 10px;
         }
 
         .clear-btn:hover {
@@ -404,6 +368,23 @@
         .back-main-btn:hover {
             background-color: #4b5563;
         }
+
+        .finish-btn {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .finish-btn:hover {
+            background-color: #059669;
+        }
     </style>
 </head>
 <body>
@@ -416,7 +397,7 @@
 
     <div class="container">
         <div class="logo-section">
-            <img src="../ielts-logo.png" alt="IELTS Logo">
+            <img src="ielts-logo.png" alt="IELTS Logo">
         </div>
 
         <div class="header-bar">
@@ -570,30 +551,10 @@
                 <div class="q-indicator other" data-q="40">40</div>
             </div>
 
-            <!-- Answers Section -->
-            <div class="answers-section">
-                <h3>Answers for Section 1</h3>
-                <div class="btn-row">
-                    <button class="show-btn" onclick="toggleAnswers()">Show / Hide Answers</button>
-                    <button class="clear-btn" onclick="clearAll()">Clear All</button>
-                </div>
-                <div class="answers-content" id="answers">
-                    <strong>Answers:</strong><br>
-                    1. Marrowfield<br>
-                    2. relative<br>
-                    3. socialise<br>
-                    4. full<br>
-                    5. Domestic life<br>
-                    6. clouds<br>
-                    7. timing<br>
-                    8. Animal Magic<br>
-                    9. movement<br>
-                    10. dark
-                </div>
-            </div>
+            <button class="clear-btn" onclick="clearAll()">Clear All Answers</button>
 
             <div class="nav-container">
-                <a href="index.html" class="back-main-btn">← Back to Main Page</a>
+                <a href="index.html" class="back-main-btn">← Home</a>
                 <div class="nav-buttons">
                     <span style="width:46px;"></span>
                     <a href="listening-test3-part2.html" class="nav-btn">→</a>
@@ -607,7 +568,7 @@
             // Save/load answers
             for (let i = 1; i <= 10; i++) {
                 const field = document.getElementById('q' + i);
-                const saved = localStorage.getItem('TEST3_P1_q' + i);
+                const saved = localStorage.getItem('L_P1_q' + i);
                 if (saved) {
                     field.value = saved;
                     field.classList.add('filled');
@@ -615,7 +576,7 @@
                 }
                 field.addEventListener('input', function() {
                     const val = this.value.trim();
-                    localStorage.setItem('TEST3_P1_q' + i, val);
+                    localStorage.setItem('L_P1_q' + i, val);
                     if (val) {
                         this.classList.add('filled');
                         markAnswered(i);
@@ -632,7 +593,6 @@
             let currentRange = null;
             let lastNoteId = 0;
 
-            // Show right-click menu on selected text
             highlightArea.addEventListener('contextmenu', function(e) {
                 const sel = window.getSelection();
                 if (!sel || sel.isCollapsed || !sel.toString().trim()) {
@@ -647,10 +607,8 @@
                 contextMenu.style.display = 'block';
             });
 
-            // Hide menu when clicking elsewhere
             document.addEventListener('click', () => contextMenu.style.display = 'none');
 
-            // Highlight selected text
             document.getElementById('menuHighlight').addEventListener('click', function() {
                 if (!currentRange) return;
                 const span = document.createElement('span');
@@ -662,7 +620,6 @@
                 currentRange = null;
             });
 
-            // Remove highlight
             document.getElementById('menuRemove').addEventListener('click', function() {
                 if (!currentRange) return;
                 try {
@@ -677,7 +634,6 @@
                 currentRange = null;
             });
 
-            // Add sticky note
             document.getElementById('menuNote').addEventListener('click', function() {
                 if (!currentRange) return;
                 const rect = currentRange.getBoundingClientRect();
@@ -701,33 +657,17 @@
             };
         });
 
-        function toggleAnswers() {
-            const ansDiv = document.getElementById('answers');
-            ansDiv.style.display = ansDiv.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // Clear all: answers, highlights, notes
         function clearAll() {
-            if (!confirm("Clear ALL: your answers, highlights, and notes? This cannot be undone.")) return;
-            
-            // 1. Clear input fields & saved data
+            if (!confirm("Clear ALL your answers, highlights, and notes? This cannot be undone.")) return;
             for (let i = 1; i <= 10; i++) {
-                localStorage.removeItem('TEST3_P1_q' + i);
+                localStorage.removeItem('L_P1_q' + i);
                 const field = document.getElementById('q' + i);
-                if (field) {
-                    field.value = '';
-                    field.classList.remove('filled');
-                }
+                if (field) { field.value = ''; field.classList.remove('filled'); }
                 unmarkAnswered(i);
             }
-
-            // 2. Remove all highlights
             document.querySelectorAll('.user-highlight').forEach(span => {
                 span.replaceWith(document.createTextNode(span.textContent));
             });
-            highlightArea.normalize();
-
-            // 3. Remove all sticky notes
             document.querySelectorAll('.sticky-note').forEach(note => note.remove());
         }
 
