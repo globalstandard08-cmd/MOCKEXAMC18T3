@@ -321,8 +321,9 @@
             gap: 8px;
             flex-wrap: wrap;
             margin-left: auto;
+            align-items: center;
         }
-        .back-btn, .next-btn {
+        .back-btn, .next-btn, .clear-mcq-btn, .clear-all-btn {
             padding: 6px 12px;
             background: #f0f4f8;
             color: #1f3a5f;
@@ -332,6 +333,22 @@
             font-weight: 500;
             cursor: pointer;
             font-size: 13px;
+        }
+        .clear-mcq-btn {
+            background: #fff8e1;
+            border-color: #ffd591;
+            color: #b37400;
+        }
+        .clear-mcq-btn:hover {
+            background: #fff3cd;
+        }
+        .clear-all-btn {
+            background: #fff0f0;
+            border-color: #fecaca;
+            color: #dc2626;
+        }
+        .clear-all-btn:hover {
+            background: #fee2e2;
         }
         .back-btn:hover, .next-btn:hover {
             background: #ffffff;
@@ -524,9 +541,11 @@
 
         <div class="bottom-controls">
            <div class="nav-buttons">
-    <a href="reading-test3-passage2.html" class="back-btn">← Previous</a>
-    <a href="writing-intro.html" class="next-btn">Next →</a>
-</div>
+                <button class="clear-mcq-btn" onclick="clearMCQAnswers()">🧹 Clear MCQs</button>
+                <button class="clear-all-btn" onclick="clearAllAnswers()">🗑️ Clear All Answers</button>
+                <a href="reading-test3-passage2.html" class="back-btn">← Previous</a>
+                <a href="writing-intro.html" class="next-btn">Next →</a>
+            </div>
         </div>
     </div>
 
@@ -536,6 +555,53 @@
         const passageId = 'Test3_Passage3';
         const TOTAL_QUESTIONS = 40;
         let dragNote = null, dragOffsetX = 0, dragOffsetY = 0;
+
+        // ✅ Clear ONLY Multiple Choice answers (Q27–Q30)
+        function clearMCQAnswers() {
+            if (!confirm('Clear only Multiple Choice answers (Q27–Q30)? Text answers, highlights & notes will stay.')) return;
+            
+            for (let q = 27; q <= 30; q++) {
+                document.querySelectorAll(`input[name="q${q}"]`).forEach(r => r.checked = false);
+            }
+            
+            const saved = JSON.parse(localStorage.getItem(`${passageId}_answers`) || '{}');
+            for (let q = 27; q <= 30; q++) delete saved[`q${q}`];
+            localStorage.setItem(`${passageId}_answers`, JSON.stringify(saved));
+            
+            const shared = JSON.parse(localStorage.getItem('reading-answers') || '{}');
+            for (let q = 27; q <= 30; q++) delete shared[`q${q}`];
+            localStorage.setItem('reading-answers', JSON.stringify(shared));
+            
+            updateStatus();
+            alert('✅ Multiple Choice answers cleared!');
+        }
+
+        // ✅ Clear ALL answers for this passage (MCQs + Text + Flags)
+        function clearAllAnswers() {
+            if (!confirm('⚠️ Are you sure you want to clear ALL answers for this passage?\n\nThis will erase:\n• Multiple Choice (Q27–Q30)\n• Text answers (Q31–Q40)\n• Flags\n\nHighlights & Notes will be kept.')) return;
+
+            // Clear all inputs on page
+            for (let q = 27; q <= TOTAL_QUESTIONS; q++) {
+                document.querySelectorAll(`input[name="q${q}"]`).forEach(r => {
+                    if (r.type === 'radio') r.checked = false;
+                    else if (r.type === 'text') r.value = '';
+                });
+                // Clear flags
+                document.getElementById('flag' + q)?.classList.remove('flagged');
+                localStorage.removeItem(`${passageId}_flag_${q}`);
+            }
+
+            // Clear saved answers for this passage
+            localStorage.removeItem(`${passageId}_answers`);
+
+            // Also remove from shared reading answers
+            const shared = JSON.parse(localStorage.getItem('reading-answers') || '{}');
+            for (let q = 27; q <= TOTAL_QUESTIONS; q++) delete shared[`q${q}`];
+            localStorage.setItem('reading-answers', JSON.stringify(shared));
+
+            updateStatus();
+            alert('✅ All answers cleared! Highlights & Notes saved.');
+        }
 
         // ✅ Navigator 1–40
         function initQuestionNav() {
