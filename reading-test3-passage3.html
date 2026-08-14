@@ -706,7 +706,23 @@
             }
             localStorage.setItem(`${passageId}_answers`, JSON.stringify(answers));
             updateStatus();
+            saveCombinedReadingAnswers();
         }
+
+        // ✅ Save answers Q27–40 to the shared reading-answers list
+        function saveCombinedReadingAnswers() {
+            const savedAll = localStorage.getItem('reading-answers') || '{}';
+            const allAnswers = JSON.parse(savedAll);
+            const savedPassage = localStorage.getItem(`${passageId}_answers`) || '{}';
+            const passageAnswers = JSON.parse(savedPassage);
+            for (let q = 27; q <= 40; q++) {
+                if (passageAnswers[`q${q}`]) {
+                    allAnswers[`q${q}`] = passageAnswers[`q${q}`];
+                }
+            }
+            localStorage.setItem('reading-answers', JSON.stringify(allAnswers));
+        }
+
         function loadAnswers() {
             const data = localStorage.getItem(`${passageId}_answers`);
             if (!data) return;
@@ -745,52 +761,13 @@
             }
         });
 
-        // ✅ SAVE ALL READING ANSWERS FOR REVIEW PAGE — NEWLY ADDED
-        function saveAllReadingAnswers() {
-            const allAnswers = {};
-            // Passage 1: Q1–13
-            const p1 = localStorage.getItem('Test3_Passage1_answers');
-            if (p1) {
-                const a1 = JSON.parse(p1);
-                for (let i = 1; i <= 13; i++) {
-                    allAnswers['q' + i] = a1['q' + i] || '';
-                }
-            }
-            // Passage 2: Q14–26
-            const p2 = localStorage.getItem('Test3_Passage2_answers');
-            if (p2) {
-                const a2 = JSON.parse(p2);
-                for (let i = 14; i <= 26; i++) {
-                    allAnswers['q' + i] = a2['q' + i] || '';
-                }
-            }
-            // Passage 3: Q27–40
-            const p3 = localStorage.getItem('Test3_Passage3_answers');
-            if (p3) {
-                const a3 = JSON.parse(p3);
-                for (let i = 27; i <= 40; i++) {
-                    allAnswers['q' + i] = a3['q' + i] || '';
-                }
-            }
-            // Save combined answers for review page
-            localStorage.setItem('reading-answers', JSON.stringify(allAnswers));
-        }
-
         // ✅ Initialize
         window.onload = () => {
             initQuestionNav();
             loadAnswers();
             loadHighlights();
             loadNotes();
-            saveAllReadingAnswers(); // Save combined answers on load
         };
-
-        // Also save combined answers whenever any answer changes
-        document.addEventListener('input', e => {
-            if (e.target.name?.startsWith('q')) {
-                setTimeout(saveAllReadingAnswers, 100);
-            }
-        });
     </script>
 </body>
 </html>
