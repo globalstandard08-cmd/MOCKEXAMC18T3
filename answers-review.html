@@ -3,262 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS — Complete Answers Review</title>
+    <title>All Answers Review — RECOVERED VERSION ✅</title>
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: #f5f7fa;
-            padding: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #2c3e50;
-        }
-        .header h1 {
-            color: #2c3e50;
-        }
-        .meta-bar {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-            padding: 10px;
-            background: #eef2f5;
-            border-radius: 6px;
-        }
-        section {
-            background: white;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        }
-        section h2 {
-            color: #2980b9;
-            margin-bottom: 18px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #ddd;
-        }
-        .answer-row {
-            padding: 6px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .answer-row span {
-            display: inline-block;
-            min-width: 40px;
-            font-weight: bold;
-            color: #34495e;
-        }
-        .writing-box {
-            width: 100%;
-            min-height: 180px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            background: #fafafa;
-            white-space: pre-wrap;
-            line-height: 1.6;
-            margin-top: 8px;
-        }
-        .grading-area {
-            margin-top: 20px;
-            padding: 15px;
-            background: #fef9e7;
-            border-radius: 6px;
-            border-left: 4px solid #f39c12;
-        }
-        .grading-area h3 {
-            margin-bottom: 12px;
-            color: #d35400;
-        }
-        input, textarea {
-            padding: 6px;
-            margin: 4px;
-            border: 1px solid #bbb;
-            border-radius: 4px;
-        }
-        .empty-note {
-            color: #999;
-            font-style: italic;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #2980b9;
-            color: white;
-            border-radius: 6px;
-            text-decoration: none;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        .btn:hover {
-            background: #1f618d;
-        }
+        body { font-family: Arial, sans-serif; padding: 20px; background:#f5f7fa; line-height:1.6; }
+        .container { max-width: 900px; margin: 0 auto; background:white; padding:30px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+        h1 { text-align:center; color:#1f3a5f; margin-bottom:30px; }
+        h2 { color:#2c5aa0; border-bottom:2px solid #e0e7ff; padding-bottom:8px; margin-top:35px; }
+        .answer-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap:10px; margin:15px 0; }
+        .answer-box { padding:10px; border-radius:6px; background:#f0f4ff; border:1px solid #d4deff; text-align:center; }
+        .q-label { font-weight:bold; color:#1f3a5f; font-size:14px; }
+        .a-value { margin-top:5px; font-size:16px; color:#222; min-height:24px; }
+        .empty { color:#999; font-style:italic; }
+        .status { background:#e6ffea; border:1px solid:#b3ffc2; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center; font-weight:bold; color:#006622; }
+        .candidate { background:#fff9e6; border:1px solid #ffe599; padding:10px; border-radius:6px; margin-bottom:15px; text-align:center; color:#664400; }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>📋 All Student Answers — RECOVERED ✅</h1>
+        
+        <div class="status">✅ READING DIRECTLY FROM EACH PASSAGE'S SAFE STORAGE</div>
 
-    <div class="header">
-        <h1>📝 IELTS — Complete Answers Review</h1>
-        <p>Listening • Reading • Writing — All Sections in One View</p>
-        <div class="meta-bar">
-            <div><strong>Candidate:</strong> <span id="candidate-name">Not Provided</span></div>
-            <div><strong>Date:</strong> <span id="review-date"></span></div>
-            <div><strong>Exam:</strong> IELTS Computer-Based — Test 3</div>
-        </div>
+        <!-- PASSAGE 1 -->
+        <h2>📖 Reading Passage 1</h2>
+        <div id="p1" class="answer-grid"><span class="empty">Loading...</span></div>
+
+        <!-- PASSAGE 2 -->
+        <h2>📖 Reading Passage 2</h2>
+        <div id="p2" class="answer-grid"><span class="empty">Loading...</span></div>
+
+        <!-- PASSAGE 3 -->
+        <h2>📖 Reading Passage 3</h2>
+        <div id="p3" class="answer-grid"><span class="empty">Loading...</span></div>
+
+        <!-- LISTENING -->
+        <h2>👂 Listening Test</h2>
+        <div id="listening" class="answer-grid"><span class="empty">Loading...</span></div>
+
     </div>
 
-    <!-- LISTENING SECTION -->
-    <section>
-        <h2>🎧 Section 1 — Listening Answers</h2>
-        <div id="listening-answers">
-            <span class="empty-note">No listening answers found.</span>
-        </div>
-    </section>
-
-    <!-- READING SECTION -->
-    <section>
-        <h2>📖 Section 2 — Reading Answers</h2>
-        <div id="reading-answers">
-            <span class="empty-note">No reading answers found.</span>
-        </div>
-    </section>
-
-    <!-- WRITING SECTION -->
-    <section>
-        <h2>✍️ Section 3 — Writing</h2>
-
-        <h3>Task 1</h3>
-        <div id="writing-task1" class="writing-box">No Task 1 response found.</div>
-
-        <h3 style="margin-top: 25px;">Task 2</h3>
-        <div id="writing-task2" class="writing-box">No Task 2 response found.</div>
-    </section>
-
-    <!-- TEACHER GRADING & FEEDBACK -->
-    <section class="grading-area">
-        <h3>✅ Teacher Grading & Feedback</h3>
-
-        <div>
-            <strong>Listening:</strong> Score
-            <input type="number" id="score-listen" min="0" max="40" placeholder="/ 40">
-            Band: <input type="number" step="0.5" id="band-listen" placeholder="0.0 — 9.0">
-        </div>
-        <div style="margin-top: 5px;">
-            <strong>Reading:</strong> Score
-            <input type="number" id="score-read" min="0" max="40" placeholder="/ 40">
-            Band: <input type="number" step="0.5" id="band-read" placeholder="0.0 — 9.0">
-        </div>
-        <div style="margin-top: 5px;">
-            <strong>Writing:</strong> Task 1 Band
-            <input type="number" step="0.5" id="band-write1" placeholder="0.0 — 9.0">
-            Task 2 Band
-            <input type="number" step="0.5" id="band-write2" placeholder="0.0 — 9.0">
-            Overall Band: <strong id="overall-band">—</strong>
-        </div>
-
-        <div style="margin-top: 12px;">
-            <label><strong>Comments & Feedback:</strong></label><br>
-            <textarea id="teacher-comments" rows="5" style="width:100%; margin-top:6px;" placeholder="Enter detailed feedback here..."></textarea>
-        </div>
-
-        <button class="btn" onclick="saveGrading()">💾 Save Grading & Feedback</button>
-        <button class="btn" style="background:#27ae60;" onclick="window.print()">🖨️ Print / Save as PDF</button>
-    </section>
-
-    <a href="index.html" class="btn">← Back to Home</a>
-
 <script>
-// Set today's date automatically
-document.getElementById('review-date').textContent = new Date().toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric'
-});
+// ✅ THIS PAGE READS DIRECTLY FROM EACH SEPARATE STORAGE — NO OVERWRITING!
+// If the student used a Candidate ID, put it HERE e.g. "_CANDIDATE_student001"
+const CANDIDATE_SUFFIX = ''; // Leave EMPTY if no ID was used
 
-// ---------- LOAD ALL ANSWERS FROM LOCALSTORAGE ----------
-window.addEventListener('DOMContentLoaded', function () {
+// STORAGE KEYS — MUST MATCH EACH PASSAGE'S passageId
+const STORAGE = {
+    p1: 'Test3_Passage1' + CANDIDATE_SUFFIX,
+    p2: 'Test3_Passage2' + CANDIDATE_SUFFIX,
+    p3: 'Test3_Passage3' + CANDIDATE_SUFFIX,
+    listening: 'Listening_Test' + CANDIDATE_SUFFIX
+};
 
-    // --- LISTENING ---
-    const listeningData = localStorage.getItem('listening-answers');
-    const listContainer = document.getElementById('listening-answers');
-    if (listeningData) {
-        const answers = JSON.parse(listeningData);
-        listContainer.innerHTML = '';
-        Object.keys(answers).sort((a,b) => Number(a.replace(/\D/g,'')) - Number(b.replace(/\D/g,''))).forEach(q => {
-            listContainer.innerHTML += `<div class="answer-row"><span>${q}:</span> ${answers[q] || '<em>(blank)</em>'}</div>`;
-        });
+function loadAnswers(key, containerId, startQ, endQ) {
+    const container = document.getElementById(containerId);
+    const raw = localStorage.getItem(key + '_answers');
+    if (!raw) {
+        container.innerHTML = '<span class="empty">⚠️ No answers found for this section</span>';
+        return;
     }
-
-    // --- READING ---
-    const readingData = localStorage.getItem('reading-answers');
-    const readContainer = document.getElementById('reading-answers');
-    if (readingData) {
-        const answers = JSON.parse(readingData);
-        readContainer.innerHTML = '';
-        Object.keys(answers).sort((a,b) => Number(a.replace(/\D/g,'')) - Number(b.replace(/\D/g,''))).forEach(q => {
-            readContainer.innerHTML += `<div class="answer-row"><span>${q}:</span> ${answers[q] || '<em>(blank)</em>'}</div>`;
-        });
+    const answers = JSON.parse(raw);
+    let html = '';
+    for (let q = startQ; q <= endQ; q++) {
+        const ans = answers[`q${q}`] || '';
+        html += `<div class="answer-box">
+            <div class="q-label">Q${q}</div>
+            <div class="a-value">${ans || '<span class="empty">—</span>'}</div>
+        </div>`;
     }
-
-    // --- WRITING TASK 1 ---
-    const task1 = localStorage.getItem('writing-task1');
-    if (task1) document.getElementById('writing-task1').textContent = task1;
-
-    // --- WRITING TASK 2 ---
-    const task2 = localStorage.getItem('writing-task2');
-    if (task2) document.getElementById('writing-task2').textContent = task2;
-
-    // Load saved grading if any
-    loadGrading();
-});
-
-// ---------- SAVE & LOAD GRADING ----------
-function saveGrading() {
-    localStorage.setItem('grading-listen-score', document.getElementById('score-listen').value);
-    localStorage.setItem('grading-listen-band', document.getElementById('band-listen').value);
-    localStorage.setItem('grading-read-score', document.getElementById('score-read').value);
-    localStorage.setItem('grading-read-band', document.getElementById('band-read').value);
-    localStorage.setItem('grading-write-band1', document.getElementById('band-write1').value);
-    localStorage.setItem('grading-write-band2', document.getElementById('band-write2').value);
-    localStorage.setItem('grading-comments', document.getElementById('teacher-comments').value);
-    calculateOverall();
-    alert('✅ Grading & feedback saved successfully!');
+    container.innerHTML = html;
 }
 
-function loadGrading() {
-    document.getElementById('score-listen').value = localStorage.getItem('grading-listen-score') || '';
-    document.getElementById('band-listen').value = localStorage.getItem('grading-listen-band') || '';
-    document.getElementById('score-read').value = localStorage.getItem('score-read') || '';
-    document.getElementById('band-read').value = localStorage.getItem('grading-read-band') || '';
-    document.getElementById('band-write1').value = localStorage.getItem('grading-write-band1') || '';
-    document.getElementById('band-write2').value = localStorage.getItem('grading-write-band2') || '';
-    document.getElementById('teacher-comments').value = localStorage.getItem('grading-comments') || '';
-    calculateOverall();
-}
-
-// Auto-calculate overall writing band
-['band-write1','band-write2'].forEach(id => {
-    document.getElementById(id).addEventListener('input', calculateOverall);
-});
-
-function calculateOverall() {
-    const b1 = parseFloat(document.getElementById('band-write1').value);
-    const b2 = parseFloat(document.getElementById('band-write2').value);
-    if (!isNaN(b1) && !isNaN(b2)) {
-        document.getElementById('overall-band').textContent = ((b1 + b2) / 2).toFixed(1);
-    } else {
-        document.getElementById('overall-band').textContent = '—';
-    }
-}
+window.onload = function() {
+    // Adjust question numbers to match YOUR actual test ranges
+    loadAnswers(STORAGE.p1, 'p1', 1, 13);   // Passage 1: Q1–Q13 (adjust if needed)
+    loadAnswers(STORAGE.p2, 'p2', 14, 26);  // Passage 2: Q14–Q26 (adjust if needed)
+    loadAnswers(STORAGE.p3, 'p3', 27, 40);  // Passage 3: Q27–Q40 ✅ matches your file
+    loadAnswers(STORAGE.listening, 'listening', 1, 40); // Listening Q1–Q40 (adjust if needed)
+};
 </script>
 </body>
 </html>
