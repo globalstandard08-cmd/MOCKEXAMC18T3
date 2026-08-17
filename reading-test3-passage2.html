@@ -676,52 +676,53 @@
             });
         }
 
-        // ✅ Save/Load Answers
+        // ✅ SAVE ANSWERS — NOW MATCHES PASSAGE 1 & REVIEW PAGE!
         function saveAnswers() {
-            const answers = {};
-            for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
-                const input = document.querySelector(`input[name="q${q}"]`);
-                if (input && input.type === 'text') answers[`q${q}`] = input.value;
-                document.querySelectorAll(`input[name="q${q}"]:checked`).forEach(r => answers[`q${q}`] = r.value);
-            }
-            localStorage.setItem(`${passageId}_answers`, JSON.stringify(answers));
-            updateStatus();
-            saveCombinedReadingAnswers();
-        }
-
-        // ✅ COMBINED SAVE — Saves Passage 2 answers to the full reading set
-        function saveCombinedReadingAnswers() {
-            const savedAll = localStorage.getItem('reading-answers') || '{}';
-            const allAnswers = JSON.parse(savedAll);
-            const savedPassage = localStorage.getItem(`${passageId}_answers`) || '{}';
-            const passageAnswers = JSON.parse(savedPassage);
+            // Passage 2 handles Q14–Q26
             for (let q = 14; q <= 26; q++) {
-                if (passageAnswers[`q${q}`]) {
-                    allAnswers[`q${q}`] = passageAnswers[`q${q}`];
+                const textInput = document.querySelector(`input[name="q${q}"]`);
+                if (textInput && textInput.type === 'text') {
+                    let val = textInput.value.trim().toUpperCase();
+                    localStorage.setItem(`${READING_STORAGE_KEY}_q${q}`, val);
+                }
+                const radios = document.getElementsByName(`q${q}`);
+                if (radios.length > 0) {
+                    for (let r of radios) {
+                        if (r.checked) {
+                            localStorage.setItem(`${READING_STORAGE_KEY}_q${q}`, r.value);
+                        }
+                    }
                 }
             }
-            localStorage.setItem('reading-answers', JSON.stringify(allAnswers));
+            updateStatus();
         }
 
+        // ✅ LOAD ANSWERS — NOW MATCHES PASSAGE 1 & REVIEW PAGE!
         function loadAnswers() {
-            const data = localStorage.getItem(`${passageId}_answers`);
-            if (!data) return;
-            const answers = JSON.parse(data);
-            for (let k in answers) {
-                const input = document.querySelector(`input[name="${k}"]`);
-                if (input && input.type === 'text') input.value = answers[k];
-                document.querySelectorAll(`input[name="${k}"]`).forEach(r => { r.checked = (r.value === answers[k]); });
+            // Passage 2 loads Q14–Q26
+            for (let q = 14; q <= 26; q++) {
+                const savedVal = localStorage.getItem(`${READING_STORAGE_KEY}_q${q}`);
+                if (!savedVal) continue;
+
+                const radios = document.getElementsByName(`q${q}`);
+                if (radios.length > 0) {
+                    for (let r of radios) {
+                        r.checked = (r.value === savedVal);
+                    }
+                } else {
+                    const input = document.querySelector(`input[name="q${q}"]`);
+                    if (input) input.value = savedVal;
+                }
             }
             updateStatus();
         }
 
-        // ✅ Status Colors: FLAG > ANSWERED
+        // ✅ Status Colors — Reads from shared Reading_Test keys
         function updateStatus() {
-            const answers = JSON.parse(localStorage.getItem(`${passageId}_answers`) || '{}');
-            for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
+            for (let q = 14; q <= 26; q++) {
                 const stat = document.getElementById('stat' + q);
                 if (!stat) continue;
-                const val = (answers[`q${q}`] || '').trim().toUpperCase();
+                const val = (localStorage.getItem(`${READING_STORAGE_KEY}_q${q}`) || '').trim().toUpperCase();
                 const hasAnswer = val.length > 0;
                 const flagged = localStorage.getItem(`${passageId}_flag_${q}`) === 'true';
 
@@ -741,13 +742,12 @@
             }
         });
 
-        // ✅ Initialize — ONE LINE ADDED to push answers to combined list on load
+        // ✅ Initialize
         window.onload = () => {
             initQuestionNav();
             loadAnswers();
             loadHighlights();
             loadNotes();
-            saveCombinedReadingAnswers();
         };
     </script>
 </body>
