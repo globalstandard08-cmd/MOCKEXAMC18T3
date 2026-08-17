@@ -520,11 +520,14 @@
     </div>
 
     <script>
+        // ✅ SHARED READING STORAGE KEY — SAME ACROSS ALL PASSAGES
+        const READING_STORAGE_KEY = 'Reading_Test';
+        const passageId = 'Test3_Passage1'; // for highlights, notes, flags only
+        const TOTAL_QUESTIONS = 40;
+
         // ✅ Global variables
         let currentRange = null;
         let lastNoteId = 0;
-        const passageId = 'Test3_Passage1';
-        const TOTAL_QUESTIONS = 40;
         let dragNote = null;
         let dragOffsetX = 0;
         let dragOffsetY = 0;
@@ -551,7 +554,7 @@
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // ✅ Toggle Flag — Real IELTS behavior
+        // ✅ Toggle Flag — saved per passage, NOT shared
         function toggleFlag(qNum) {
             const flag = document.getElementById('flag' + qNum);
             const stat = document.getElementById('stat' + qNum);
@@ -688,7 +691,7 @@
             saveNotes();
         }
 
-        // ✅ Save/Load Highlights
+        // ✅ Save/Load Highlights — per passage, NOT shared
         function saveHighlights() {
             const passageArea = document.getElementById('passageArea');
             const questionsArea = document.getElementById('questionsArea');
@@ -705,7 +708,7 @@
             if (quesHtml) questionsArea.innerHTML = quesHtml;
         }
 
-        // ✅ Save/Load Notes
+        // ✅ Save/Load Notes — per passage, NOT shared
         function saveNotes() {
             const notes = Array.from(document.querySelectorAll('.sticky-note')).map(n => ({
                 id: n.id, left: n.style.left, top: n.style.top, text: n.querySelector('.note-textarea').value
@@ -732,71 +735,52 @@
             });
         }
 
-        // ✅ Save answers
+        // ✅ SAVE ANSWERS TO SHARED READING KEY — q1–q13 saved to Reading_Test_q1 etc.
         function saveAnswers() {
-            let answers = {};
             for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
                 const textInput = document.querySelector(`input[name="q${q}"]`);
                 if (textInput && textInput.type === 'text') {
-                    answers[`q${q}`] = textInput.value;
+                    let val = textInput.value.trim().toUpperCase();
+                    localStorage.setItem(`${READING_STORAGE_KEY}_q${q}`, val);
                 }
                 const radios = document.getElementsByName(`q${q}`);
                 if (radios.length > 0) {
                     for (let r of radios) {
-                        if (r.checked) answers[`q${q}`] = r.value;
+                        if (r.checked) {
+                            localStorage.setItem(`${READING_STORAGE_KEY}_q${q}`, r.value);
+                        }
                     }
                 }
             }
-            localStorage.setItem(`${passageId}_answers`, JSON.stringify(answers));
             updateStatus();
-            saveCombinedReadingAnswers();
         }
 
-        // ✅ COMBINED SAVE — Saves Passage 1 answers to the full reading set
-        function saveCombinedReadingAnswers() {
-            const savedAll = localStorage.getItem('reading-answers') || '{}';
-            const allAnswers = JSON.parse(savedAll);
-            const savedPassage = localStorage.getItem(`${passageId}_answers`) || '{}';
-            const passageAnswers = JSON.parse(savedPassage);
-            for (let q = 1; q <= 13; q++) {
-                if (passageAnswers[`q${q}`]) {
-                    allAnswers[`q${q}`] = passageAnswers[`q${q}`];
-                }
-            }
-            localStorage.setItem('reading-answers', JSON.stringify(allAnswers));
-        }
-
-        // ✅ Load saved answers
+        // ✅ LOAD ANSWERS FROM SHARED READING KEY
         function loadAnswers() {
-            const saved = localStorage.getItem(`${passageId}_answers`);
-            if (!saved) return;
-            const answers = JSON.parse(saved);
-            for (let key in answers) {
-                const radios = document.getElementsByName(key);
+            for (let q = 1; q <= 13; q++) {
+                const savedVal = localStorage.getItem(`${READING_STORAGE_KEY}_q${q}`);
+                if (!savedVal) continue;
+
+                const radios = document.getElementsByName(`q${q}`);
                 if (radios.length > 0) {
                     for (let r of radios) {
-                        if (r.value === answers[key]) r.checked = true;
+                        r.checked = (r.value === savedVal);
                     }
                 } else {
-                    const input = document.querySelector(`input[name="${key}"]`);
-                    if (input) input.value = answers[key];
+                    const input = document.querySelector(`input[name="q${q}"]`);
+                    if (input) input.value = savedVal;
                 }
             }
             updateStatus();
         }
 
-        // ✅ Update status colors — REAL IELTS PRIORITY: FLAG > ANSWERED
+        // ✅ Update status colors — SHARED KEY
         function updateStatus() {
-            const savedAnswers = localStorage.getItem(`${passageId}_answers`);
-            const answers = savedAnswers ? JSON.parse(savedAnswers) : {};
-
             for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
                 const statBtn = document.getElementById('stat' + q);
                 if (!statBtn) continue;
 
-                const answerKey = `q${q}`;
-                let val = answers[answerKey] || '';
-                val = val.trim().toUpperCase();
+                const val = (localStorage.getItem(`${READING_STORAGE_KEY}_q${q}`) || '').trim().toUpperCase();
                 const hasAnswer = val.length > 0;
                 const isFlagged = localStorage.getItem(`${passageId}_flag_${q}`) === 'true';
 
@@ -812,9 +796,9 @@
             }
         }
 
-        // ✅ Clear All
+        // ✅ Clear All — CLEARS ONLY SHARED READING ANSWERS 1–13 + passage-specific flags/highlights/notes
         function clearAllAnswers() {
-            if (!confirm('⚠️ This will clear ALL answers, flags, highlights and notes. Continue?')) return;
+            if (!confirm('⚠️ This will clear ALL answers, flags, highlights and notes for this passage. Continue?')) return;
 
             document.querySelectorAll('.answer-input').forEach(input => input.value = '');
             document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
@@ -826,7 +810,14 @@
             });
             document.querySelectorAll('.sticky-note').forEach(n => n.remove());
 
-            localStorage.removeItem(`${passageId}_answers`);
+            // Clear SHARED answers for Q1–Q13
+            for (let q = 1; q <= 13; q++) {
+                localStorage.removeItem(`${READING_STORAGE_KEY}_q${q}`);
+            }
+            // Clear passage-specific data
+            for (let q = 1; q <= 13; q++) {
+                localStorage.removeItem(`${passageId}_flag_${q}`);
+            }
             localStorage.removeItem(`${passageId}_passage_highlights`);
             localStorage.removeItem(`${passageId}_questions_highlights`);
             localStorage.removeItem(`${passageId}_notes`);
@@ -834,7 +825,7 @@
             updateStatus();
         }
 
-        // ✅ Auto-save
+        // ✅ Auto-save on any input change
         document.addEventListener('input', function(e) {
             if (e.target.name?.startsWith('q') || e.target.classList.contains('note-textarea')) {
                 saveAnswers();
