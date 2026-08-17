@@ -79,20 +79,20 @@
         <div class="status">✅ Auto-loaded from all test sections — answers stay when navigating between pages</div>
 
         <!-- LISTENING -->
-        <h2>👂 Listening Test</h2>
+        <h2>👂 Listening Test — All 4 Parts (Q1–Q40)</h2>
         <div id="listening" class="answer-grid"><span class="empty">Loading...</span></div>
 
-        <!-- PASSAGE 1 -->
-        <h2>📖 Reading Passage 1</h2>
-        <div id="p1" class="answer-grid"><span class="empty">Loading...</span></div>
+        <!-- READING PASSAGE 1 -->
+        <h2>📖 Reading Passage 1 — Q1–Q13</h2>
+        <div id="reading1" class="answer-grid"><span class="empty">Loading...</span></div>
 
-        <!-- PASSAGE 2 -->
-        <h2>📖 Reading Passage 2</h2>
-        <div id="p2" class="answer-grid"><span class="empty">Loading...</span></div>
+        <!-- READING PASSAGE 2 -->
+        <h2>📖 Reading Passage 2 — Q14–Q26</h2>
+        <div id="reading2" class="answer-grid"><span class="empty">Loading...</span></div>
 
-        <!-- PASSAGE 3 -->
-        <h2>📖 Reading Passage 3</h2>
-        <div id="p3" class="answer-grid"><span class="empty">Loading...</span></div>
+        <!-- READING PASSAGE 3 -->
+        <h2>📖 Reading Passage 3 — Q27–Q40</h2>
+        <div id="reading3" class="answer-grid"><span class="empty">Loading...</span></div>
 
         <!-- WRITING TASK 1 -->
         <h2>✍️ Writing Task 1</h2>
@@ -112,40 +112,13 @@
     </div>
 
 <script>
-const CANDIDATE_SUFFIX = '';
+// ✅ CORRECT STORAGE KEYS — MATCHES YOUR READING & LISTENING EXACTLY
+const READING_KEY = 'Reading_Test';
+const LISTENING_KEY = 'Listening_Test';
 
-// ✅ CORRECT STORAGE KEYS
-const STORAGE = {
-    p1: 'reading-test3-passage1' + CANDIDATE_SUFFIX,
-    p2: 'reading-test3-passage2' + CANDIDATE_SUFFIX,
-    p3: 'reading-test3-passage3' + CANDIDATE_SUFFIX,
-    listening: 'Listening_Test',  // ✅ EXACT key from your listening files
-    writing1: 'task1Input',
-    writing2: 'task2Input'
-};
-
-// ✅ READING — standard loader (answers stored as one JSON object)
-function loadAnswers(key, containerId, startQ, endQ) {
-    const container = document.getElementById(containerId);
-    const raw = localStorage.getItem(key + '_answers');
-    if (!raw) {
-        container.innerHTML = '<span class="empty">⚠️ No answers found for this section</span>';
-        return;
-    }
-    const answers = JSON.parse(raw);
-    let html = '';
-    for (let q = startQ; q <= endQ; q++) {
-        const ans = answers[`q${q}`] || '';
-        html += `<div class="answer-box">
-            <div class="q-label">Q${q}</div>
-            <div class="a-value">${ans || '<span class="empty">—</span>'}</div>
-        </div>`;
-    }
-    container.innerHTML = html;
-}
-
-// ✅ LISTENING — SPECIAL loader (each question saved separately!)
-function loadListeningAnswers(keyPrefix, containerId, startQ, endQ) {
+// ✅ UNIVERSAL LOADER — works for BOTH Reading AND Listening!
+// Each question saved separately: "KeyName_q1", "KeyName_q2", etc.
+function loadAnswersByKey(keyPrefix, containerId, startQ, endQ) {
     const container = document.getElementById(containerId);
     let html = '';
     let found = false;
@@ -157,10 +130,10 @@ function loadListeningAnswers(keyPrefix, containerId, startQ, endQ) {
             <div class="a-value">${ans || '<span class="empty">—</span>'}</div>
         </div>`;
     }
-    container.innerHTML = found ? html : '<span class="empty">⚠️ No answers found for this section</span>';
+    container.innerHTML = found ? html : '<span class="empty">⚠️ No answers found. Answer a question first.</span>';
 }
 
-// ✅ WRITING
+// ✅ WRITING LOADER
 function loadWriting(taskKey, containerId, minWords) {
     const container = document.getElementById(containerId);
     const text = localStorage.getItem(taskKey) || '';
@@ -168,45 +141,43 @@ function loadWriting(taskKey, containerId, minWords) {
         container.innerHTML = '<div class="no-answer">⚠️ No writing answer saved yet</div>';
         return;
     }
-    const words = text.trim().replace(/\s+/g, ' ').split(' ').length;
-    const statusColor = words >= minWords ? '#166534' : '#dc2626';
+    const words = text.trim().replace(/\s+/g, ' ').split(' ').filter(w => w.length > 0).length;
+    const statusColor = words >= minWords ? '#10b981' : '#dc2626';
     container.innerHTML = text + 
         `<div class="word-info">Word count: <strong style="color:${statusColor}">${words}</strong> / ${minWords} minimum</div>`;
 }
 
 window.onload = function() {
-    // Reading
-    loadAnswers(STORAGE.p1, 'p1', 1, 13);
-    loadAnswers(STORAGE.p2, 'p2', 14, 26);
-    loadAnswers(STORAGE.p3, 'p3', 27, 40);
+    // ✅ LISTENING — Q1–Q40
+    loadAnswersByKey(LISTENING_KEY, 'listening', 1, 40);
     
-    // ✅ Listening — special function! Q1–Q40
-    loadListeningAnswers(STORAGE.listening, 'listening', 1, 40);
+    // ✅ READING — ALL 3 PASSAGES use ONE shared key! Q1–Q40
+    loadAnswersByKey(READING_KEY, 'reading1', 1, 13);
+    loadAnswersByKey(READING_KEY, 'reading2', 14, 26);
+    loadAnswersByKey(READING_KEY, 'reading3', 27, 40);
     
-    // Writing
-    loadWriting(STORAGE.writing1, 'writingTask1', 150);
-    loadWriting(STORAGE.writing2, 'writingTask2', 250);
+    // ✅ WRITING
+    loadWriting('task1Input', 'writingTask1', 150);
+    loadWriting('task2Input', 'writingTask2', 250);
 };
 
-// ✅ Clear EVERYTHING — all sections
+// ✅ CLEAR EVERYTHING
 function clearAllTestAnswers() {
-    if (!confirm('⚠️ Are you SURE you want to clear EVERYTHING?\n\nListening + Reading (all 3 passages) + Writing (both tasks)\n\nThis cannot be undone!')) return;
+    if (!confirm('⚠️ Are you SURE you want to clear EVERYTHING?\n\nListening (Q1–Q40) + Reading (Q1–Q40) + Writing\n\nThis cannot be undone!')) return;
     
-    // Clear Listening (separate keys Q1–Q40)
+    // Clear Listening
     for (let q = 1; q <= 40; q++) {
-        localStorage.removeItem(STORAGE.listening + '_q' + q);
+        localStorage.removeItem(LISTENING_KEY + '_q' + q);
     }
-    
     // Clear Reading
-    localStorage.removeItem(STORAGE.p1 + '_answers');
-    localStorage.removeItem(STORAGE.p2 + '_answers');
-    localStorage.removeItem(STORAGE.p3 + '_answers');
-    
+    for (let q = 1; q <= 40; q++) {
+        localStorage.removeItem(READING_KEY + '_q' + q);
+    }
     // Clear Writing
-    localStorage.removeItem(STORAGE.writing1);
-    localStorage.removeItem(STORAGE.writing2);
+    localStorage.removeItem('task1Input');
+    localStorage.removeItem('task2Input');
     
-    alert('✅ ALL answers cleared! Page will now refresh.');
+    alert('✅ ALL answers cleared! Page will refresh.');
     location.reload();
 }
 </script>
