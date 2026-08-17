@@ -564,22 +564,27 @@
     </div>
 
     <script>
-        const LISTENING_STORAGE_KEY = 'Listening_Test'; // ✅ ONE shared key for ALL parts
+        // ✅ Shared storage key — SAME KEY across ALL parts + answer-review.html
+        const LISTENING_STORAGE_KEY = 'Listening_Test';
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Save/load answers — Q1–10 saved to BOTH places so Parts can find them
+            // Load saved answers on page load
             for (let i = 1; i <= 10; i++) {
                 const field = document.getElementById('q' + i);
-                const saved = localStorage.getItem(LISTENING_STORAGE_KEY + '_q' + i); // ✅ Load from SHARED
-                if (saved) {
-                    field.value = saved;
+                const savedValue = localStorage.getItem(LISTENING_STORAGE_KEY + '_q' + i);
+
+                if (savedValue) {
+                    field.value = savedValue;
                     field.classList.add('filled');
                     markAnswered(i);
                 }
+
+                // Auto-save on every keystroke
                 field.addEventListener('input', function() {
                     const val = this.value.trim();
-                    localStorage.setItem('L_P1_q' + i, val); // keep old backup
-                    localStorage.setItem(LISTENING_STORAGE_KEY + '_q' + i, val); // ✅ SAVE TO SHARED
+                    // Save to SHARED key so answer-review.html can read it
+                    localStorage.setItem(LISTENING_STORAGE_KEY + '_q' + i, val);
+
                     if (val) {
                         this.classList.add('filled');
                         markAnswered(i);
@@ -663,8 +668,8 @@
         function clearAll() {
             if (!confirm("Clear ALL your answers, highlights, and notes? This cannot be undone.")) return;
             for (let i = 1; i <= 10; i++) {
-                localStorage.removeItem('L_P1_q' + i);
-                localStorage.removeItem(LISTENING_STORAGE_KEY + '_q' + i); // ✅ Also clear shared
+                // ✅ Clear from SHARED storage so answer-review.html is also cleared
+                localStorage.removeItem(LISTENING_STORAGE_KEY + '_q' + i);
                 const field = document.getElementById('q' + i);
                 if (field) { field.value = ''; field.classList.remove('filled'); }
                 unmarkAnswered(i);
