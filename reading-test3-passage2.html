@@ -740,12 +740,13 @@
             }
         });
 
-        // ✅ Initialize
+        // ✅ Initialize — ONE LINE ADDED to push answers to combined list on load
         window.onload = () => {
             initQuestionNav();
             loadAnswers();
             loadHighlights();
             loadNotes();
+            saveCombinedReadingAnswers();
         };
     </script>
 </body>
