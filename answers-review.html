@@ -14,7 +14,7 @@
         .q-label { font-weight:bold; color:#1f3a5f; font-size:14px; }
         .a-value { margin-top:5px; font-size:16px; color:#222; min-height:24px; }
         .empty { color:#999; font-style:italic; }
-        .status { background:#e6ffea; border:1px solid:#b3ffc2; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center; font-weight:bold; color:#006622; }
+        .status { background:#e6ffea; border:1px solid #b3ffc2; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center; font-weight:bold; color:#006622; }
         .candidate { background:#fff9e6; border:1px solid #ffe599; padding:10px; border-radius:6px; margin-bottom:15px; text-align:center; color:#664400; }
         
         /* Writing panels */
@@ -57,6 +57,20 @@
         .clear-all-btn:hover {
             background: #fee2e2;
         }
+        .home-btn {
+            display:inline-block; 
+            padding:10px 20px; 
+            background:#1f3a5f; 
+            color:white; 
+            font-size:15px; 
+            border-radius:6px; 
+            text-decoration:none; 
+            font-weight:bold;
+            margin-top: 12px;
+        }
+        .home-btn:hover {
+            background:#2c5aa0;
+        }
     </style>
 </head>
 <body>
@@ -89,15 +103,16 @@
         <h2>✍️ Writing Task 2</h2>
         <div id="writingTask2" class="writing-panel">Loading...</div>
 
-        <!-- CLEAR ALL -->
+        <!-- CLEAR ALL & HOME -->
         <div class="clear-all-section">
             <button class="clear-all-btn" onclick="clearAllTestAnswers()">🗑️ Clear ALL Answers & Restart Test</button>
+            <br>
+            <a href="index.html" class="home-btn">🏠 Home — Go to Main Page</a>
         </div>
 
     </div>
 
 <script>
-// ✅ READS FROM EVERY SECTION'S OWN STORAGE — ALL KEYS MATCH YOUR TEST PAGES
 const CANDIDATE_SUFFIX = '';
 
 const STORAGE = {
@@ -142,28 +157,22 @@ function loadWriting(taskKey, containerId, minWords) {
 }
 
 window.onload = function() {
-    // Reading & Listening question ranges
     loadAnswers(STORAGE.p1, 'p1', 1, 13);
     loadAnswers(STORAGE.p2, 'p2', 14, 26);
     loadAnswers(STORAGE.p3, 'p3', 27, 40);
     loadAnswers(STORAGE.listening, 'listening', 1, 40);
 
-    // Writing Tasks (min word counts)
     loadWriting(STORAGE.writing1, 'writingTask1', 150);
     loadWriting(STORAGE.writing2, 'writingTask2', 250);
 };
 
-// ✅ Clear EVERYTHING — all sections
 function clearAllTestAnswers() {
     if (!confirm('⚠️ Are you SURE you want to clear EVERYTHING?\n\nListening + Reading (all 3 passages) + Writing (both tasks)\n\nThis cannot be undone!')) return;
     
-    // Clear Listening & Reading
     localStorage.removeItem(STORAGE.p1 + '_answers');
     localStorage.removeItem(STORAGE.p2 + '_answers');
     localStorage.removeItem(STORAGE.p3 + '_answers');
     localStorage.removeItem(STORAGE.listening + '_answers');
-    
-    // Clear Writing
     localStorage.removeItem(STORAGE.writing1);
     localStorage.removeItem(STORAGE.writing2);
     
