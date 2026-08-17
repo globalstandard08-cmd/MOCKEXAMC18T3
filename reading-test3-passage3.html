@@ -392,7 +392,7 @@
 
 <p>In the latest update of Hattie's influential meta‑analysis of factors influencing student achievement, one of the most significant factors is the teachers' estimate of achievement. Streaming students by diagnosed achievement automatically limits what the student feels the student is capable of. Meanwhile, in a mixed environment, teachers' estimates need to be more diverse and flexible.</p>
 
-<p>While streaming might seem to help teachers effectively target a student's ZPD, it can underestimate the importance of peer‑to‑peer learning. A crucial aspect of constructivist theory is the role of the MKO — 'more‑knowledgeable other' — in knowledge construction. While teachers are traditionally the MKOs in classrooms, the value of knowledgeable student peers must not go unrecognised either.</p>
+<p>While streaming might seem to help teachers effectively target a student's ZPD, it can underestimate the importance of peer‑to‑peer learning. A crucial aspect of constructivist theory is the role of the MKO — 'more‑knowledgeable other' — in knowledge construction. While teachers are traditionally the MKOs in classrooms, the value of knowledgeable student peers must not be unrecognised either.</p>
 
 <p>I find it amazing to watch students get over an idea to their peers in ways that I would never think of. They operate with different language tools and different social tools from teachers and, having just learnt it themselves, they possess similar cognitive structures to their struggling classmates. There is also something exciting about passing on skills and knowledge that you yourself have just mastered — a certain pride and zeal, a certain freshness to the interaction between 'teacher' and 'learner' that is often lost by the expert for whom the steps are obvious and the joy of discovery forgotten.</p>
 
@@ -557,6 +557,43 @@
         const TOTAL_QUESTIONS = 40;
         let dragNote = null, dragOffsetX = 0, dragOffsetY = 0;
 
+        // ✅ Save answers to SHARED storage (Reading_Test_q#)
+        function saveAnswers() {
+            const answers = {};
+            for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
+                const input = document.querySelector(`input[name="q${q}"]`);
+                if (input && input.type === 'text') answers[`q${q}`] = input.value;
+                document.querySelectorAll(`input[name="q${q}"]:checked`).forEach(r => answers[`q${q}`] = r.value);
+            }
+            localStorage.setItem(`${passageId}_answers`, JSON.stringify(answers));
+            
+            // ✅ Save to SHARED keys — same as Review page expects
+            const shared = JSON.parse(localStorage.getItem('Reading_Test') || '{}');
+            for (let q = 27; q <= 40; q++) {
+                if (answers[`q${q}`]) {
+                    shared[`q${q}`] = answers[`q${q}`];
+                }
+            }
+            localStorage.setItem('Reading_Test', JSON.stringify(shared));
+            updateStatus();
+        }
+
+        // ✅ Load answers from SHARED storage
+        function loadAnswers() {
+            const shared = JSON.parse(localStorage.getItem('Reading_Test') || '{}');
+            const local = JSON.parse(localStorage.getItem(`${passageId}_answers`) || '{}');
+            
+            // Merge shared + local (shared takes priority)
+            const answers = { ...local, ...shared };
+            
+            for (let k in answers) {
+                const input = document.querySelector(`input[name="${k}"]`);
+                if (input && input.type === 'text') input.value = answers[k];
+                document.querySelectorAll(`input[name="${k}"]`).forEach(r => { r.checked = (r.value === answers[k]); });
+            }
+            updateStatus();
+        }
+
         // ✅ Clear ONLY Multiple Choice answers (Q27–Q30)
         function clearMCQAnswers() {
             if (!confirm('Clear only Multiple Choice answers (Q27–Q30)? Text answers, highlights & notes will stay.')) return;
@@ -565,13 +602,17 @@
                 document.querySelectorAll(`input[name="q${q}"]`).forEach(r => r.checked = false);
             }
             
+            // Remove from shared storage too
+            const shared = JSON.parse(localStorage.getItem('Reading_Test') || '{}');
+            for (let q = 27; q <= 30; q++) {
+                delete shared[`q${q}`];
+                delete shared[`Test3_Passage3_answers`];
+            }
+            localStorage.setItem('Reading_Test', JSON.stringify(shared));
+            
             const saved = JSON.parse(localStorage.getItem(`${passageId}_answers`) || '{}');
             for (let q = 27; q <= 30; q++) delete saved[`q${q}`];
             localStorage.setItem(`${passageId}_answers`, JSON.stringify(saved));
-            
-            const shared = JSON.parse(localStorage.getItem('reading-answers') || '{}');
-            for (let q = 27; q <= 30; q++) delete shared[`q${q}`];
-            localStorage.setItem('reading-answers', JSON.stringify(shared));
             
             updateStatus();
             alert('✅ Multiple Choice answers cleared!');
@@ -592,13 +633,15 @@
                 localStorage.removeItem(`${passageId}_flag_${q}`);
             }
 
-            // Clear saved answers for this passage
-            localStorage.removeItem(`${passageId}_answers`);
+            // Clear from SHARED storage
+            const shared = JSON.parse(localStorage.getItem('Reading_Test') || '{}');
+            for (let q = 27; q <= 40; q++) {
+                delete shared[`q${q}`];
+            }
+            localStorage.setItem('Reading_Test', JSON.stringify(shared));
 
-            // Also remove from shared reading answers
-            const shared = JSON.parse(localStorage.getItem('reading-answers') || '{}');
-            for (let q = 27; q <= TOTAL_QUESTIONS; q++) delete shared[`q${q}`];
-            localStorage.setItem('reading-answers', JSON.stringify(shared));
+            // Clear local
+            localStorage.removeItem(`${passageId}_answers`);
 
             updateStatus();
             alert('✅ All answers cleared! Highlights & Notes saved.');
@@ -763,48 +806,9 @@
             });
         }
 
-        // ✅ Save/Load Answers
-        function saveAnswers() {
-            const answers = {};
-            for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
-                const input = document.querySelector(`input[name="q${q}"]`);
-                if (input && input.type === 'text') answers[`q${q}`] = input.value;
-                document.querySelectorAll(`input[name="q${q}"]:checked`).forEach(r => answers[`q${q}`] = r.value);
-            }
-            localStorage.setItem(`${passageId}_answers`, JSON.stringify(answers));
-            updateStatus();
-            saveCombinedReadingAnswers();
-        }
-
-        // ✅ Save answers Q27–40 to the shared reading-answers list
-        function saveCombinedReadingAnswers() {
-            const savedAll = localStorage.getItem('reading-answers') || '{}';
-            const allAnswers = JSON.parse(savedAll);
-            const savedPassage = localStorage.getItem(`${passageId}_answers`) || '{}';
-            const passageAnswers = JSON.parse(savedPassage);
-            for (let q = 27; q <= 40; q++) {
-                if (passageAnswers[`q${q}`]) {
-                    allAnswers[`q${q}`] = passageAnswers[`q${q}`];
-                }
-            }
-            localStorage.setItem('reading-answers', JSON.stringify(allAnswers));
-        }
-
-        function loadAnswers() {
-            const data = localStorage.getItem(`${passageId}_answers`);
-            if (!data) return;
-            const answers = JSON.parse(data);
-            for (let k in answers) {
-                const input = document.querySelector(`input[name="${k}"]`);
-                if (input && input.type === 'text') input.value = answers[k];
-                document.querySelectorAll(`input[name="${k}"]`).forEach(r => { r.checked = (r.value === answers[k]); });
-            }
-            updateStatus();
-        }
-
         // ✅ Status Colors: FLAG > ANSWERED
         function updateStatus() {
-            const answers = JSON.parse(localStorage.getItem(`${passageId}_answers`) || '{}');
+            const answers = JSON.parse(localStorage.getItem('Reading_Test') || '{}');
             for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
                 const stat = document.getElementById('stat' + q);
                 if (!stat) continue;
@@ -828,11 +832,10 @@
             }
         });
 
-        // ✅ Initialize — added the sync line
+        // ✅ Initialize
         window.onload = () => {
             initQuestionNav();
             loadAnswers();
-            saveCombinedReadingAnswers();  // ✅ THIS LINE ADDED — syncs answers on load
             loadHighlights();
             loadNotes();
         };
