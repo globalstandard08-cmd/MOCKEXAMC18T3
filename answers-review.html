@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Answers Review — RECOVERED VERSION ✅</title>
+    <title>All Answers Review — Complete ✅</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; background:#f5f7fa; line-height:1.6; }
         .container { max-width: 900px; margin: 0 auto; background:white; padding:30px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
@@ -16,13 +16,58 @@
         .empty { color:#999; font-style:italic; }
         .status { background:#e6ffea; border:1px solid:#b3ffc2; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center; font-weight:bold; color:#006622; }
         .candidate { background:#fff9e6; border:1px solid #ffe599; padding:10px; border-radius:6px; margin-bottom:15px; text-align:center; color:#664400; }
+        
+        /* Writing panels */
+        .writing-panel {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 15px 0;
+            white-space: pre-wrap;
+            line-height: 1.7;
+            color: #1a1a1a;
+        }
+        .word-info {
+            font-size: 14px;
+            color: #4a5568;
+            margin-top: 8px;
+        }
+        .no-answer {
+            color: #999;
+            font-style: italic;
+            padding: 15px;
+            text-align: center;
+        }
+        .clear-all-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .clear-all-btn {
+            padding: 10px 20px;
+            background: #fff0f0;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            font-size: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .clear-all-btn:hover {
+            background: #fee2e2;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📋 All Student Answers — RECOVERED ✅</h1>
+        <h1>📋 All Student Answers — Complete Test</h1>
         
-        <div class="status">✅ READING DIRECTLY FROM EACH PASSAGE'S SAFE STORAGE</div>
+        <div class="status">✅ Auto-loaded from all test sections — answers stay when navigating between pages</div>
+
+        <!-- LISTENING -->
+        <h2>👂 Listening Test</h2>
+        <div id="listening" class="answer-grid"><span class="empty">Loading...</span></div>
 
         <!-- PASSAGE 1 -->
         <h2>📖 Reading Passage 1</h2>
@@ -36,23 +81,32 @@
         <h2>📖 Reading Passage 3</h2>
         <div id="p3" class="answer-grid"><span class="empty">Loading...</span></div>
 
-        <!-- LISTENING -->
-        <h2>👂 Listening Test</h2>
-        <div id="listening" class="answer-grid"><span class="empty">Loading...</span></div>
+        <!-- WRITING TASK 1 -->
+        <h2>✍️ Writing Task 1</h2>
+        <div id="writingTask1" class="writing-panel">Loading...</div>
+
+        <!-- WRITING TASK 2 -->
+        <h2>✍️ Writing Task 2</h2>
+        <div id="writingTask2" class="writing-panel">Loading...</div>
+
+        <!-- CLEAR ALL -->
+        <div class="clear-all-section">
+            <button class="clear-all-btn" onclick="clearAllTestAnswers()">🗑️ Clear ALL Answers & Restart Test</button>
+        </div>
 
     </div>
 
 <script>
-// ✅ THIS PAGE READS DIRECTLY FROM EACH SEPARATE STORAGE — NO OVERWRITING!
-// If the student used a Candidate ID, put it HERE e.g. "_CANDIDATE_student001"
-const CANDIDATE_SUFFIX = ''; // Leave EMPTY if no ID was used
+// ✅ READS FROM EVERY SECTION'S OWN STORAGE — ALL KEYS MATCH YOUR TEST PAGES
+const CANDIDATE_SUFFIX = '';
 
-// STORAGE KEYS — MUST MATCH EACH PASSAGE'S passageId
 const STORAGE = {
     p1: 'Test3_Passage1' + CANDIDATE_SUFFIX,
     p2: 'Test3_Passage2' + CANDIDATE_SUFFIX,
     p3: 'Test3_Passage3' + CANDIDATE_SUFFIX,
-    listening: 'Listening_Test' + CANDIDATE_SUFFIX
+    listening: 'Listening_Test' + CANDIDATE_SUFFIX,
+    writing1: 'task1Input',
+    writing2: 'task2Input'
 };
 
 function loadAnswers(key, containerId, startQ, endQ) {
@@ -74,13 +128,48 @@ function loadAnswers(key, containerId, startQ, endQ) {
     container.innerHTML = html;
 }
 
+function loadWriting(taskKey, containerId, minWords) {
+    const container = document.getElementById(containerId);
+    const text = localStorage.getItem(taskKey) || '';
+    if (!text) {
+        container.innerHTML = '<div class="no-answer">⚠️ No writing answer saved yet</div>';
+        return;
+    }
+    const words = text.trim().replace(/\s+/g, ' ').split(' ').length;
+    const statusColor = words >= minWords ? '#166534' : '#dc2626';
+    container.innerHTML = text + 
+        `<div class="word-info">Word count: <strong style="color:${statusColor}">${words}</strong> / ${minWords} minimum</div>`;
+}
+
 window.onload = function() {
-    // Adjust question numbers to match YOUR actual test ranges
-    loadAnswers(STORAGE.p1, 'p1', 1, 13);   // Passage 1: Q1–Q13 (adjust if needed)
-    loadAnswers(STORAGE.p2, 'p2', 14, 26);  // Passage 2: Q14–Q26 (adjust if needed)
-    loadAnswers(STORAGE.p3, 'p3', 27, 40);  // Passage 3: Q27–Q40 ✅ matches your file
-    loadAnswers(STORAGE.listening, 'listening', 1, 40); // Listening Q1–Q40 (adjust if needed)
+    // Reading & Listening question ranges
+    loadAnswers(STORAGE.p1, 'p1', 1, 13);
+    loadAnswers(STORAGE.p2, 'p2', 14, 26);
+    loadAnswers(STORAGE.p3, 'p3', 27, 40);
+    loadAnswers(STORAGE.listening, 'listening', 1, 40);
+
+    // Writing Tasks (min word counts)
+    loadWriting(STORAGE.writing1, 'writingTask1', 150);
+    loadWriting(STORAGE.writing2, 'writingTask2', 250);
 };
+
+// ✅ Clear EVERYTHING — all sections
+function clearAllTestAnswers() {
+    if (!confirm('⚠️ Are you SURE you want to clear EVERYTHING?\n\nListening + Reading (all 3 passages) + Writing (both tasks)\n\nThis cannot be undone!')) return;
+    
+    // Clear Listening & Reading
+    localStorage.removeItem(STORAGE.p1 + '_answers');
+    localStorage.removeItem(STORAGE.p2 + '_answers');
+    localStorage.removeItem(STORAGE.p3 + '_answers');
+    localStorage.removeItem(STORAGE.listening + '_answers');
+    
+    // Clear Writing
+    localStorage.removeItem(STORAGE.writing1);
+    localStorage.removeItem(STORAGE.writing2);
+    
+    alert('✅ ALL answers cleared! Page will now refresh.');
+    location.reload();
+}
 </script>
 </body>
 </html>
