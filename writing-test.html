@@ -136,6 +136,12 @@
             display: none;
         }
 
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
         .export-btn {
             padding: 8px 16px;
             background: #f0f4f8;
@@ -148,6 +154,19 @@
 
         .export-btn:hover {
             background: #e2eaf3;
+        }
+
+        .clear-all-btn {
+            padding: 8px 16px;
+            background: #fff0f0;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .clear-all-btn:hover {
+            background: #fee2e2;
         }
 
         .nav-bar {
@@ -227,7 +246,10 @@
             <textarea id="task1Input" placeholder="Write your response here..."></textarea>
             <div class="word-count" id="task1Count">Words: 0 / 150 minimum</div>
             <div class="save-note" id="save1">✅ Auto-saved</div>
-            <button class="export-btn" onclick="exportAnswer('task1Input', 'Writing_Task1.txt')">📄 Save Task 1</button>
+            <div class="btn-row">
+                <button class="export-btn" onclick="exportAnswer('task1Input', 'Writing_Task1.txt')">📄 Save Task 1</button>
+                <button class="clear-all-btn" onclick="clearAllAnswers()">🗑️ Clear All Answers</button>
+            </div>
         </div>
     </div>
 
@@ -267,6 +289,15 @@ function exportAnswer(inputId, fileName) {
     link.download = fileName;
     link.click();
     URL.revokeObjectURL(link.href);
+}
+
+// ✅ Clear saved writing answer
+function clearAllAnswers() {
+    if (!confirm('⚠️ Are you sure you want to clear your writing answer?\n\nThis will erase your text and cannot be undone.')) return;
+    localStorage.removeItem('task1Input');
+    document.getElementById('task1Input').value = '';
+    countWords('task1Input','task1Count',150);
+    alert('✅ Answer cleared!');
 }
 
 window.onload = () => {
