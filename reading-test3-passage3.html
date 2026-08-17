@@ -827,10 +827,11 @@
             }
         });
 
-        // ✅ Initialize
+        // ✅ Initialize — added the sync line
         window.onload = () => {
             initQuestionNav();
             loadAnswers();
+            saveCombinedReadingAnswers();  // ✅ THIS LINE ADDED — syncs answers on load
             loadHighlights();
             loadNotes();
         };
