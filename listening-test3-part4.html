@@ -439,22 +439,26 @@
     </div>
 
     <script>
+        // ✅ SAME shared key across ALL parts and answer-review
+        const LISTENING_STORAGE_KEY = 'Listening_Test';
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Load saved answers for Q31-40
+            // Load saved answers for Q31-40 from SHARED storage
             for (let i = 31; i <= 40; i++) {
-                const saved = localStorage.getItem('L_P4_q' + i);
+                const saved = localStorage.getItem(LISTENING_STORAGE_KEY + '_q' + i);
                 if (saved) {
                     document.getElementById('ans' + i).value = saved;
                     markAnswered(i);
                 }
             }
 
-            // Auto-save when typing in any answer field
+            // Auto-save to SHARED key when typing in any answer field
             document.querySelectorAll('.answer-input').forEach(input => {
                 input.addEventListener('input', function() {
                     const qNum = this.id.replace('ans', '');
                     const val = this.value.trim().toUpperCase();
-                    localStorage.setItem('L_P4_q' + qNum, val);
+                    // ✅ Save to SHARED key
+                    localStorage.setItem(LISTENING_STORAGE_KEY + '_q' + qNum, val);
                     if (val.length > 0) {
                         markAnswered(parseInt(qNum));
                     } else {
@@ -559,37 +563,6 @@
                 activeNote.style.top = (e.pageY - dragOffset.y) + 'px';
             });
             document.addEventListener('mouseup', () => { activeNote = null; });
-
-            // ✅ SAVE ALL LISTENING ANSWERS FOR REVIEW PAGE — RUNS ON PAGE LOAD
-            function saveAllListeningAnswers() {
-                const allAnswers = {};
-                // Part 1: Q1–Q10
-                for (let i = 1; i <= 10; i++) {
-                    allAnswers['q' + i] = localStorage.getItem('L_P1_q' + i) || '';
-                }
-                // Part 2: Q11–Q20
-                for (let i = 11; i <= 20; i++) {
-                    allAnswers['q' + i] = localStorage.getItem('L_P2_q' + i) || '';
-                }
-                // Part 3: Q21–Q30
-                for (let i = 21; i <= 30; i++) {
-                    allAnswers['q' + i] = localStorage.getItem('L_P3_q' + i) || '';
-                }
-                // Part 4: Q31–Q40
-                for (let i = 31; i <= 40; i++) {
-                    allAnswers['q' + i] = localStorage.getItem('L_P4_q' + i) || '';
-                }
-                // Save for review page to read
-                localStorage.setItem('listening-answers', JSON.stringify(allAnswers));
-            }
-
-            // Save once when page finishes loading
-            saveAllListeningAnswers();
-
-            // Also save every time user types any answer
-            document.querySelectorAll('.answer-input').forEach(input => {
-                input.addEventListener('input', saveAllListeningAnswers);
-            });
         });
 
         function markAnswered(qNum) {
@@ -602,7 +575,8 @@
         function clearAll() {
             if (!confirm("Clear ALL answers, highlights, and notes for Part 4?")) return;
             for (let i = 31; i <= 40; i++) {
-                localStorage.removeItem('L_P4_q' + i);
+                // ✅ Clear from SHARED key so all parts and review page are synced
+                localStorage.removeItem(LISTENING_STORAGE_KEY + '_q' + i);
                 const input = document.getElementById('ans' + i);
                 if (input) input.value = '';
                 unmarkAnswered(i);
