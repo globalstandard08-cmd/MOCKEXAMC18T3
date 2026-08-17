@@ -15,7 +15,6 @@
         .a-value { margin-top:5px; font-size:16px; color:#222; min-height:24px; }
         .empty { color:#999; font-style:italic; }
         .status { background:#e6ffea; border:1px solid #b3ffc2; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center; font-weight:bold; color:#006622; }
-        .candidate { background:#fff9e6; border:1px solid #ffe599; padding:10px; border-radius:6px; margin-bottom:15px; text-align:center; color:#664400; }
         
         /* Writing panels */
         .writing-panel {
@@ -115,15 +114,17 @@
 <script>
 const CANDIDATE_SUFFIX = '';
 
+// ✅ CORRECT STORAGE KEYS
 const STORAGE = {
     p1: 'reading-test3-passage1' + CANDIDATE_SUFFIX,
     p2: 'reading-test3-passage2' + CANDIDATE_SUFFIX,
     p3: 'reading-test3-passage3' + CANDIDATE_SUFFIX,
-    listening: 'Listening_Test' + CANDIDATE_SUFFIX,
+    listening: 'Listening_Test',  // ✅ EXACT key from your listening files
     writing1: 'task1Input',
     writing2: 'task2Input'
 };
 
+// ✅ READING — standard loader (answers stored as one JSON object)
 function loadAnswers(key, containerId, startQ, endQ) {
     const container = document.getElementById(containerId);
     const raw = localStorage.getItem(key + '_answers');
@@ -143,6 +144,23 @@ function loadAnswers(key, containerId, startQ, endQ) {
     container.innerHTML = html;
 }
 
+// ✅ LISTENING — SPECIAL loader (each question saved separately!)
+function loadListeningAnswers(keyPrefix, containerId, startQ, endQ) {
+    const container = document.getElementById(containerId);
+    let html = '';
+    let found = false;
+    for (let q = startQ; q <= endQ; q++) {
+        const ans = localStorage.getItem(keyPrefix + '_q' + q) || '';
+        if (ans) found = true;
+        html += `<div class="answer-box">
+            <div class="q-label">Q${q}</div>
+            <div class="a-value">${ans || '<span class="empty">—</span>'}</div>
+        </div>`;
+    }
+    container.innerHTML = found ? html : '<span class="empty">⚠️ No answers found for this section</span>';
+}
+
+// ✅ WRITING
 function loadWriting(taskKey, containerId, minWords) {
     const container = document.getElementById(containerId);
     const text = localStorage.getItem(taskKey) || '';
@@ -157,22 +175,34 @@ function loadWriting(taskKey, containerId, minWords) {
 }
 
 window.onload = function() {
+    // Reading
     loadAnswers(STORAGE.p1, 'p1', 1, 13);
     loadAnswers(STORAGE.p2, 'p2', 14, 26);
     loadAnswers(STORAGE.p3, 'p3', 27, 40);
-    loadAnswers(STORAGE.listening, 'listening', 1, 40);
-
+    
+    // ✅ Listening — special function! Q1–Q40
+    loadListeningAnswers(STORAGE.listening, 'listening', 1, 40);
+    
+    // Writing
     loadWriting(STORAGE.writing1, 'writingTask1', 150);
     loadWriting(STORAGE.writing2, 'writingTask2', 250);
 };
 
+// ✅ Clear EVERYTHING — all sections
 function clearAllTestAnswers() {
     if (!confirm('⚠️ Are you SURE you want to clear EVERYTHING?\n\nListening + Reading (all 3 passages) + Writing (both tasks)\n\nThis cannot be undone!')) return;
     
+    // Clear Listening (separate keys Q1–Q40)
+    for (let q = 1; q <= 40; q++) {
+        localStorage.removeItem(STORAGE.listening + '_q' + q);
+    }
+    
+    // Clear Reading
     localStorage.removeItem(STORAGE.p1 + '_answers');
     localStorage.removeItem(STORAGE.p2 + '_answers');
     localStorage.removeItem(STORAGE.p3 + '_answers');
-    localStorage.removeItem(STORAGE.listening + '_answers');
+    
+    // Clear Writing
     localStorage.removeItem(STORAGE.writing1);
     localStorage.removeItem(STORAGE.writing2);
     
