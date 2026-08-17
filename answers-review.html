@@ -112,18 +112,34 @@
     </div>
 
 <script>
-// ✅ CORRECT STORAGE KEYS — MATCHES YOUR READING & LISTENING EXACTLY
+// ✅ STORAGE KEYS — MATCHES READING & LISTENING EXACTLY
 const READING_KEY = 'Reading_Test';
 const LISTENING_KEY = 'Listening_Test';
 
-// ✅ UNIVERSAL LOADER — works for BOTH Reading AND Listening!
-// Each question saved separately: "KeyName_q1", "KeyName_q2", etc.
-function loadAnswersByKey(keyPrefix, containerId, startQ, endQ) {
+// ✅ READING LOADER — reads OBJECT format { q1: "A", q2: "B" }
+function loadReadingAnswers(containerId, startQ, endQ) {
+    const container = document.getElementById(containerId);
+    const allAnswers = JSON.parse(localStorage.getItem(READING_KEY) || '{}');
+    let html = '';
+    let found = false;
+    for (let q = startQ; q <= endQ; q++) {
+        const ans = allAnswers[`q${q}`] || '';
+        if (ans) found = true;
+        html += `<div class="answer-box">
+            <div class="q-label">Q${q}</div>
+            <div class="a-value">${ans || '<span class="empty">—</span>'}</div>
+        </div>`;
+    }
+    container.innerHTML = found ? html : '<span class="empty">⚠️ No answers found. Answer a question first.</span>';
+}
+
+// ✅ LISTENING LOADER — reads separate keys (Listening_Test_q1)
+function loadListeningAnswers(containerId, startQ, endQ) {
     const container = document.getElementById(containerId);
     let html = '';
     let found = false;
     for (let q = startQ; q <= endQ; q++) {
-        const ans = localStorage.getItem(keyPrefix + '_q' + q) || '';
+        const ans = localStorage.getItem(LISTENING_KEY + '_q' + q) || '';
         if (ans) found = true;
         html += `<div class="answer-box">
             <div class="q-label">Q${q}</div>
@@ -149,19 +165,19 @@ function loadWriting(taskKey, containerId, minWords) {
 
 window.onload = function() {
     // ✅ LISTENING — Q1–Q40
-    loadAnswersByKey(LISTENING_KEY, 'listening', 1, 40);
+    loadListeningAnswers('listening', 1, 40);
     
-    // ✅ READING — ALL 3 PASSAGES use ONE shared key! Q1–Q40
-    loadAnswersByKey(READING_KEY, 'reading1', 1, 13);
-    loadAnswersByKey(READING_KEY, 'reading2', 14, 26);
-    loadAnswersByKey(READING_KEY, 'reading3', 27, 40);
+    // ✅ READING — ALL 3 PASSAGES from shared object!
+    loadReadingAnswers('reading1', 1, 13);
+    loadReadingAnswers('reading2', 14, 26);
+    loadReadingAnswers('reading3', 27, 40);
     
     // ✅ WRITING
     loadWriting('task1Input', 'writingTask1', 150);
     loadWriting('task2Input', 'writingTask2', 250);
 };
 
-// ✅ CLEAR EVERYTHING
+// ✅ CLEAR EVERYTHING — updated for object format
 function clearAllTestAnswers() {
     if (!confirm('⚠️ Are you SURE you want to clear EVERYTHING?\n\nListening (Q1–Q40) + Reading (Q1–Q40) + Writing\n\nThis cannot be undone!')) return;
     
@@ -169,10 +185,8 @@ function clearAllTestAnswers() {
     for (let q = 1; q <= 40; q++) {
         localStorage.removeItem(LISTENING_KEY + '_q' + q);
     }
-    // Clear Reading
-    for (let q = 1; q <= 40; q++) {
-        localStorage.removeItem(READING_KEY + '_q' + q);
-    }
+    // Clear Reading (object format)
+    localStorage.removeItem(READING_KEY);
     // Clear Writing
     localStorage.removeItem('task1Input');
     localStorage.removeItem('task2Input');
