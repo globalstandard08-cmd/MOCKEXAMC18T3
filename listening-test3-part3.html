@@ -608,19 +608,22 @@
     </div>
 
     <script>
+        // ✅ SAME shared key across ALL parts and answer-review
+        const LISTENING_STORAGE_KEY = 'Listening_Test';
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Load saved answers for Q21-24 (Choose TWO)
+            // Load saved answers for Q21-24 (Choose TWO) from SHARED storage
             for (let i = 21; i <= 24; i++) {
-                const saved = localStorage.getItem('L_P3_q' + i);
+                const saved = localStorage.getItem(LISTENING_STORAGE_KEY + '_q' + i);
                 if (saved) {
                     document.getElementById('ans' + i).textContent = saved;
                     markAnswered(i);
                 }
             }
 
-            // Load saved answers for Q25-30 (Dropdown Matching)
+            // Load saved answers for Q25-30 (Dropdown Matching) from SHARED storage
             for (let i = 25; i <= 30; i++) {
-                const saved = localStorage.getItem('L_P3_q' + i);
+                const saved = localStorage.getItem(LISTENING_STORAGE_KEY + '_q' + i);
                 if (saved) {
                     document.getElementById('ans' + i).value = saved;
                     markAnswered(i);
@@ -647,8 +650,9 @@
                             selected.add(val);
                         }
                         let arr = Array.from(selected).sort();
-                        localStorage.setItem('L_P3_q' + group.qs[0], arr[0] || '');
-                        localStorage.setItem('L_P3_q' + group.qs[1], arr[1] || '');
+                        // ✅ Save to SHARED key
+                        localStorage.setItem(LISTENING_STORAGE_KEY + '_q' + group.qs[0], arr[0] || '');
+                        localStorage.setItem(LISTENING_STORAGE_KEY + '_q' + group.qs[1], arr[1] || '');
                         document.getElementById('ans' + group.qs[0]).textContent = arr[0] || '';
                         document.getElementById('ans' + group.qs[1]).textContent = arr[1] || '';
                         arr[0] ? markAnswered(group.qs[0]) : unmarkAnswered(group.qs[0]);
@@ -662,7 +666,8 @@
                 select.addEventListener('change', function() {
                     const qNum = parseInt(this.id.replace('ans', ''));
                     const val = this.value;
-                    localStorage.setItem('L_P3_q' + qNum, val);
+                    // ✅ Save to SHARED key
+                    localStorage.setItem(LISTENING_STORAGE_KEY + '_q' + qNum, val);
                     if (val) {
                         markAnswered(qNum);
                     } else {
@@ -779,7 +784,8 @@
         function clearAll() {
             if (!confirm("Clear ALL answers, highlights, and notes for Part 3?")) return;
             for (let i = 21; i <= 30; i++) {
-                localStorage.removeItem('L_P3_q' + i);
+                // ✅ Clear from SHARED key so all parts and review page are synced
+                localStorage.removeItem(LISTENING_STORAGE_KEY + '_q' + i);
                 const el = document.getElementById('ans' + i);
                 if (el.tagName === 'SELECT') el.value = '';
                 else el.textContent = '';
