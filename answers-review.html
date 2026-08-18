@@ -77,53 +77,50 @@
         <h1>📋 All Student Answers — Complete Test</h1>
         
         <div class="status">✅ Auto-loaded from all test sections — answers stay when navigating between pages</div>
-
         <!-- LISTENING -->
         <h2>👂 Listening Test — All 4 Parts (Q1–Q40)</h2>
         <div id="listening" class="answer-grid"><span class="empty">Loading...</span></div>
-
         <!-- READING PASSAGE 1 -->
         <h2>📖 Reading Passage 1 — Q1–Q13</h2>
         <div id="reading1" class="answer-grid"><span class="empty">Loading...</span></div>
-
         <!-- READING PASSAGE 2 -->
         <h2>📖 Reading Passage 2 — Q14–Q26</h2>
         <div id="reading2" class="answer-grid"><span class="empty">Loading...</span></div>
-
         <!-- READING PASSAGE 3 -->
         <h2>📖 Reading Passage 3 — Q27–Q40</h2>
         <div id="reading3" class="answer-grid"><span class="empty">Loading...</span></div>
-
         <!-- WRITING TASK 1 -->
         <h2>✍️ Writing Task 1</h2>
         <div id="writingTask1" class="writing-panel">Loading...</div>
-
         <!-- WRITING TASK 2 -->
         <h2>✍️ Writing Task 2</h2>
         <div id="writingTask2" class="writing-panel">Loading...</div>
-
         <!-- CLEAR ALL & HOME -->
         <div class="clear-all-section">
             <button class="clear-all-btn" onclick="clearAllTestAnswers()">🗑️ Clear ALL Answers & Restart Test</button>
             <br>
             <a href="index.html" class="home-btn">🏠 Home — Go to Main Page</a>
         </div>
-
     </div>
-
 <script>
 // ✅ STORAGE KEYS — MATCHES READING & LISTENING EXACTLY
 const READING_KEY = 'Reading_Test';
 const LISTENING_KEY = 'Listening_Test';
 
-// ✅ READING LOADER — reads OBJECT format { q1: "A", q2: "B" }
+// ✅ FIXED: Reads BOTH object format AND individual keys format
 function loadReadingAnswers(containerId, startQ, endQ) {
     const container = document.getElementById(containerId);
     const allAnswers = JSON.parse(localStorage.getItem(READING_KEY) || '{}');
     let html = '';
     let found = false;
+    
     for (let q = startQ; q <= endQ; q++) {
-        const ans = allAnswers[`q${q}`] || '';
+        // Try object format first
+        let ans = allAnswers[`q${q}`];
+        // Fallback: try individual key format (Reading_Test_q1)
+        if (ans === undefined || ans === null) {
+            ans = localStorage.getItem(READING_KEY + '_q' + q) || '';
+        }
         if (ans) found = true;
         html += `<div class="answer-box">
             <div class="q-label">Q${q}</div>
@@ -133,7 +130,7 @@ function loadReadingAnswers(containerId, startQ, endQ) {
     container.innerHTML = found ? html : '<span class="empty">⚠️ No answers found. Answer a question first.</span>';
 }
 
-// ✅ LISTENING LOADER — reads separate keys (Listening_Test_q1)
+// ✅ LISTENING LOADER — reads individual keys
 function loadListeningAnswers(containerId, startQ, endQ) {
     const container = document.getElementById(containerId);
     let html = '';
@@ -167,7 +164,7 @@ window.onload = function() {
     // ✅ LISTENING — Q1–Q40
     loadListeningAnswers('listening', 1, 40);
     
-    // ✅ READING — ALL 3 PASSAGES from shared object!
+    // ✅ READING — ALL 3 PASSAGES (now works with both formats!)
     loadReadingAnswers('reading1', 1, 13);
     loadReadingAnswers('reading2', 14, 26);
     loadReadingAnswers('reading3', 27, 40);
@@ -177,7 +174,7 @@ window.onload = function() {
     loadWriting('task2Input', 'writingTask2', 250);
 };
 
-// ✅ CLEAR EVERYTHING — updated for object format
+// ✅ CLEAR EVERYTHING — clears BOTH formats
 function clearAllTestAnswers() {
     if (!confirm('⚠️ Are you SURE you want to clear EVERYTHING?\n\nListening (Q1–Q40) + Reading (Q1–Q40) + Writing\n\nThis cannot be undone!')) return;
     
@@ -185,8 +182,11 @@ function clearAllTestAnswers() {
     for (let q = 1; q <= 40; q++) {
         localStorage.removeItem(LISTENING_KEY + '_q' + q);
     }
-    // Clear Reading (object format)
+    // Clear Reading — both formats
     localStorage.removeItem(READING_KEY);
+    for (let q = 1; q <= 40; q++) {
+        localStorage.removeItem(READING_KEY + '_q' + q);
+    }
     // Clear Writing
     localStorage.removeItem('task1Input');
     localStorage.removeItem('task2Input');
